@@ -3,23 +3,207 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>CMS Admin Gazebo</title>
+  <title>CMS Admin Gazebo - Login Required</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <script src="https://cdn.tailwindcss.com"></script>
 </head>
-<body class="bg-gray-100 text-gray-800 p-8">
-  <div class="max-w-4xl mx-auto bg-white p-6 rounded-xl shadow">
-    <h1 class="text-2xl font-bold mb-4">Dashboard Admin - Tambah Produk</h1>
-    <form class="space-y-4">
-      <div>
-        <label class="block text-sm font-medium">Nama Produk Gazebo</label>
-        <input type="text" class="w-full border p-2 rounded mt-1">
+<body class="bg-gray-100 text-gray-800 min-h-screen flex flex-col justify-between font-sans">
+
+  <!-- ==================== 1. FORM LOGIN ADMIN (DEFAULT MUNCUL) ==================== -->
+  <div id="loginSection" class="flex-1 flex items-center justify-center p-4">
+    <div class="bg-white p-6 sm:p-8 rounded-2xl shadow-xl border border-gray-200 w-full max-w-md">
+      <div class="text-center mb-6">
+        <div class="w-12 h-12 bg-amber-900 text-white rounded-xl flex items-center justify-center mx-auto mb-3 shadow">
+          <i class="fa-solid fa-user-shield text-xl"></i>
+        </div>
+        <h1 class="text-xl sm:text-2xl font-bold text-amber-950">Login Admin CMS</h1>
+        <p class="text-xs sm:text-sm text-gray-500 mt-1">Area terbatas khusus pengelola Gazebo Utama</p>
       </div>
-      <div>
-        <label class="block text-sm font-medium">Harga (Rp)</label>
-        <input type="number" class="w-full border p-2 rounded mt-1">
+
+      <!-- Alert Pesan Kesalahan -->
+      <div id="loginError" class="hidden mb-4 p-3 bg-red-100 border border-red-200 text-red-700 text-xs sm:text-sm rounded-lg flex items-center gap-2">
+        <i class="fa-solid fa-circle-exclamation text-red-500"></i>
+        <span>Username atau Password salah!</span>
       </div>
-      <button class="bg-amber-800 text-white px-4 py-2 rounded">Simpan Produk Baru</button>
-    </form>
+
+      <form id="loginForm" class="space-y-4">
+        <div>
+          <label class="block text-xs sm:text-sm font-medium text-gray-700 mb-1">Username</label>
+          <div class="relative">
+            <span class="absolute inset-y-0 left-0 pl-3 flex items-center text-gray-400">
+              <i class="fa-solid fa-user text-sm"></i>
+            </span>
+            <input type="text" id="username" required placeholder="Masukkan username" class="w-full pl-9 pr-3 py-2.5 border rounded-lg text-sm focus:ring-2 focus:ring-amber-800 focus:outline-none">
+          </div>
+        </div>
+
+        <div>
+          <label class="block text-xs sm:text-sm font-medium text-gray-700 mb-1">Password</label>
+          <div class="relative">
+            <span class="absolute inset-y-0 left-0 pl-3 flex items-center text-gray-400">
+              <i class="fa-solid fa-lock text-sm"></i>
+            </span>
+            <input type="password" id="password" required placeholder="••••••••" class="w-full pl-9 pr-3 py-2.5 border rounded-lg text-sm focus:ring-2 focus:ring-amber-800 focus:outline-none">
+          </div>
+        </div>
+
+        <button type="submit" class="w-full bg-amber-800 hover:bg-amber-900 text-white py-2.5 rounded-lg text-sm font-medium transition shadow-md">
+          Masuk ke Dashboard
+        </button>
+      </form>
+
+      <div class="mt-6 text-center">
+        <a href="index.html" class="text-xs text-amber-800 hover:underline flex items-center justify-center gap-1">
+          <i class="fa-solid fa-arrow-left"></i> Kembali ke Website Utama
+        </a>
+      </div>
+    </div>
   </div>
+
+
+  <!-- ==================== 2. DASHBOARD ADMIN (RAHASIA / TERPROTEKSI) ==================== -->
+  <div id="dashboardSection" class="hidden flex-1 flex flex-col">
+    <header class="bg-amber-900 text-white p-4 shadow-md sticky top-0 z-50">
+      <div class="max-w-5xl mx-auto flex justify-between items-center px-2">
+        <div class="flex items-center gap-2">
+          <i class="fa-solid fa-gauge text-amber-300"></i>
+          <h1 class="font-bold text-sm sm:text-base">Dashboard Admin Gazebo</h1>
+        </div>
+        <div class="flex items-center gap-3">
+          <a href="index.html" target="_blank" class="text-xs bg-amber-800 hover:bg-amber-700 px-3 py-1.5 rounded text-amber-100 flex items-center gap-1">
+            <i class="fa-solid fa-globe"></i> <span class="hidden sm:inline">Lihat Web</span>
+          </a>
+          <button id="logoutBtn" class="text-xs bg-red-600 hover:bg-red-700 text-white px-3 py-1.5 rounded flex items-center gap-1 transition">
+            <i class="fa-solid fa-right-from-bracket"></i> Keluar
+          </button>
+        </div>
+      </div>
+    </header>
+
+    <main class="p-4 sm:p-8 max-w-5xl mx-auto w-full flex-1 space-y-6">
+      
+      <!-- Kartu Ringkasan -->
+      <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+        <div class="bg-white p-4 rounded-xl shadow-sm border border-gray-200 flex items-center gap-4">
+          <div class="w-12 h-12 bg-amber-100 text-amber-800 rounded-lg flex items-center justify-center text-xl">
+            <i class="fa-solid fa-box"></i>
+          </div>
+          <div>
+            <p class="text-xs text-gray-500">Total Katalog</p>
+            <p class="text-lg font-bold text-gray-800">12 Produk</p>
+          </div>
+        </div>
+        <div class="bg-white p-4 rounded-xl shadow-sm border border-gray-200 flex items-center gap-4">
+          <div class="w-12 h-12 bg-emerald-100 text-emerald-800 rounded-lg flex items-center justify-center text-xl">
+            <i class="fa-solid fa-images"></i>
+          </div>
+          <div>
+            <p class="text-xs text-gray-500">Sampel Proyek</p>
+            <p class="text-lg font-bold text-gray-800">24 Galeri</p>
+          </div>
+        </div>
+        <div class="bg-white p-4 rounded-xl shadow-sm border border-gray-200 flex items-center gap-4">
+          <div class="w-12 h-12 bg-blue-100 text-blue-800 rounded-lg flex items-center justify-center text-xl">
+            <i class="fa-solid fa-star"></i>
+          </div>
+          <div>
+            <p class="text-xs text-gray-500">Ulasan Masuk</p>
+            <p class="text-lg font-bold text-gray-800">48 Review</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Form Tambah Produk -->
+      <div class="bg-white p-5 sm:p-8 rounded-xl shadow-sm border border-gray-200">
+        <h2 class="text-lg sm:text-xl font-bold mb-4 text-amber-950 flex items-center gap-2">
+          <i class="fa-solid fa-plus-circle text-amber-800"></i> Tambah Produk Gazebo Baru
+        </h2>
+        <form class="space-y-4">
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            <div>
+              <label class="block text-xs sm:text-sm font-medium text-gray-700">Nama Produk Gazebo</label>
+              <input type="text" placeholder="Contoh: Gazebo Kayu Jati Ukir" class="w-full border rounded-lg p-2.5 mt-1 text-sm focus:ring-2 focus:ring-amber-800 focus:outline-none">
+            </div>
+            <div>
+              <label class="block text-xs sm:text-sm font-medium text-gray-700">Kategori Bahan</label>
+              <select class="w-full border rounded-lg p-2.5 mt-1 text-sm focus:ring-2 focus:ring-amber-800 focus:outline-none">
+                <option>Kayu Jati Jepara</option>
+                <option>Kayu Kelapa (Glugu)</option>
+                <option>Bambu Petung</option>
+              </select>
+            </div>
+          </div>
+          <div>
+            <label class="block text-xs sm:text-sm font-medium text-gray-700">Harga Estimasi (Rp)</label>
+            <input type="number" placeholder="12500000" class="w-full border rounded-lg p-2.5 mt-1 text-sm focus:ring-2 focus:ring-amber-800 focus:outline-none">
+          </div>
+          <div>
+            <label class="block text-xs sm:text-sm font-medium text-gray-700">Deskripsi Singkat</label>
+            <textarea rows="3" class="w-full border rounded-lg p-2.5 mt-1 text-sm focus:ring-2 focus:ring-amber-800 focus:outline-none" placeholder="Spesifikasi ukuran, finishing, dll..."></textarea>
+          </div>
+          <button type="submit" class="w-full sm:w-auto bg-amber-800 hover:bg-amber-900 text-white px-6 py-2.5 rounded-lg text-sm font-medium transition shadow">
+            <i class="fa-solid fa-floppy-disk mr-1"></i> Simpan Produk
+          </button>
+        </form>
+      </div>
+
+    </main>
+  </div>
+
+  <footer class="bg-gray-200 text-gray-600 text-center py-4 text-xs border-t border-gray-300">
+    <p>&copy; 2026 Admin CMS Gazebo Utama. Secure Session System.</p>
+  </footer>
+
+  <!-- ==================== SCRIPT LOGIK AUTENTIKASI ==================== -->
+  <script>
+    // CREDENTIAL DEMO ADMIN
+    const ADMIN_USER = "admin";
+    const ADMIN_PASS = "gazebo123";
+
+    const loginSection = document.getElementById('loginSection');
+    const dashboardSection = document.getElementById('dashboardSection');
+    const loginForm = document.getElementById('loginForm');
+    const loginError = document.getElementById('loginError');
+    const logoutBtn = document.getElementById('logoutBtn');
+
+    // Cek Status Login Saat Halaman Dibuat
+    function checkAuth() {
+      const isLoggedIn = localStorage.getItem('isGazeboAdminLoggedIn');
+      if (isLoggedIn === 'true') {
+        loginSection.classList.add('hidden');
+        dashboardSection.classList.remove('hidden');
+      } else {
+        loginSection.classList.remove('hidden');
+        dashboardSection.classList.add('hidden');
+      }
+    }
+
+    // Proses Submit Form Login
+    loginForm.addEventListener('submit', (e) => {
+      e.preventDefault();
+      const userVal = document.getElementById('username').value.trim();
+      const passVal = document.getElementById('password').value.trim();
+
+      if (userVal === ADMIN_USER && passVal === ADMIN_PASS) {
+        localStorage.setItem('isGazeboAdminLoggedIn', 'true');
+        loginError.classList.add('hidden');
+        checkAuth();
+      } else {
+        loginError.classList.remove('hidden');
+      }
+    });
+
+    // Proses Logout
+    logoutBtn.addEventListener('click', () => {
+      localStorage.removeItem('isGazeboAdminLoggedIn');
+      document.getElementById('username').value = '';
+      document.getElementById('password').value = '';
+      checkAuth();
+    });
+
+    // Jalankan pemeriksaan di awal
+    checkAuth();
+  </script>
+
 </body>
 </html>
