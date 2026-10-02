@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Katalog Produk - Hasbi Berugak</title>
+  <title>Katalog Produk - Gazebo Utama</title>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <script src="https://cdn.tailwindcss.com"></script>
   <script>
@@ -24,7 +24,7 @@
   <header class="bg-amber-950 text-amber-100 sticky top-0 z-50 shadow-md">
     <div class="max-w-7xl mx-auto px-4 py-4 flex justify-between items-center">
       <a href="index.html" class="flex items-center gap-2 font-bold text-lg sm:text-xl text-amber-400">
-        <i class="fa-solid fa-campground text-2xl"></i> Hasbi Berugak
+        <i class="fa-solid fa-campground text-2xl"></i> Gazebo Utama
       </a>
       <nav class="hidden md:flex space-x-6 text-sm font-medium">
         <a href="index.html" class="hover:text-amber-400 transition">Beranda</a>
@@ -66,80 +66,91 @@
 
   <!-- FOOTER -->
   <footer class="bg-amber-950 text-amber-200 text-center py-6 text-xs border-t border-amber-900">
-    <p>&copy; 2026 Hasbi Berugak - Spesialis Gazebo Kayu Jati & Kelapa.</p>
+    <p>&copy; 2026 Gazebo Utama - Spesialis Gazebo Kayu Jati & Kelapa.</p>
   </footer>
 
   <script>
-  // Toggle Mobile Menu
-  const mobileMenuBtn = document.getElementById('mobileMenuBtn');
-  const mobileMenu = document.getElementById('mobileMenu');
-  const menuIcon = document.getElementById('menuIcon');
+    // Toggle Mobile Menu
+    const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+    const mobileMenu = document.getElementById('mobileMenu');
+    const menuIcon = document.getElementById('menuIcon');
 
-  if (mobileMenuBtn) {
-    mobileMenuBtn.addEventListener('click', () => {
-      mobileMenu.classList.toggle('hidden');
-      if (mobileMenu.classList.contains('hidden')) {
-        menuIcon.classList.remove('fa-xmark');
-        menuIcon.classList.add('fa-bars');
-      } else {
-        menuIcon.classList.remove('fa-bars');
-        menuIcon.classList.add('fa-xmark');
+    if (mobileMenuBtn) {
+      mobileMenuBtn.addEventListener('click', () => {
+        mobileMenu.classList.toggle('hidden');
+        if (mobileMenu.classList.contains('hidden')) {
+          menuIcon.classList.remove('fa-xmark');
+          menuIcon.classList.add('fa-bars');
+        } else {
+          menuIcon.classList.remove('fa-bars');
+          menuIcon.classList.add('fa-xmark');
+        }
+      });
+    }
+
+    // FUNGSI RENDER KATALOG DARI LOCALSTORAGE
+    function renderKatalog() {
+      const container = document.getElementById('katalogContainer');
+      const rawData = localStorage.getItem('gazebo_katalog');
+      
+      let dataKatalog = [];
+      if (rawData) {
+        try {
+          dataKatalog = JSON.parse(rawData);
+        } catch(e) {
+          dataKatalog = [];
+        }
+      }
+
+      // Jika data kosong
+      if (!dataKatalog || dataKatalog.length === 0) {
+        container.innerHTML = `
+          <div class="col-span-full text-center py-16 bg-white rounded-2xl border border-amber-100 p-8">
+            <i class="fa-solid fa-box-open text-5xl text-amber-800/30 mb-3"></i>
+            <h3 class="font-bold text-gray-700 text-lg">Belum Ada Produk Katalog</h3>
+            <p class="text-xs text-gray-500 mt-1">Silakan tambahkan produk baru melalui Admin CMS Panel.</p>
+          </div>
+        `;
+        return;
+      }
+
+      // Render Item Katalog
+      container.innerHTML = dataKatalog.map(item => `
+        <div class="bg-white rounded-2xl overflow-hidden shadow-md border border-amber-100 flex flex-col justify-between hover:shadow-lg transition">
+          <div>
+            <div class="h-52 overflow-hidden bg-gray-100 relative">
+              <img src="${item.img || 'https://via.placeholder.com/600x400?text=Foto+Gazebo'}" 
+                   onerror="this.onerror=null; this.src='https://via.placeholder.com/600x400?text=Gambar+Tidak+Ditemukan';" 
+                   class="w-full h-full object-cover">
+            </div>
+            <div class="p-5">
+              <span class="bg-amber-100 text-amber-900 text-[10px] font-bold px-2.5 py-1 rounded-full uppercase">${item.bahan || 'Kayu Pilihan'}</span>
+              <h3 class="font-bold text-amber-950 text-lg mt-2">${item.nama || 'Gazebo Kayu'}</h3>
+              <p class="text-xs text-gray-600 mt-2 leading-relaxed">${item.deskripsi || '-'}</p>
+            </div>
+          </div>
+          <div class="p-5 pt-0 flex justify-between items-center border-t border-gray-100 mt-4">
+            <div>
+              <span class="text-[10px] text-gray-400 block">Harga Mulai</span>
+              <span class="font-extrabold text-amber-800 text-base">${item.harga || 'Hubungi Kami'}</span>
+            </div>
+            <a href="https://wa.me/6281234567890?text=Halo%20Admin,%20saya%20tertarik%20dengan%20${encodeURIComponent(item.nama || 'Gazebo')}" target="_blank" class="bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-bold px-4 py-2.5 rounded-xl transition flex items-center gap-1.5">
+              <i class="fa-brands fa-whatsapp text-sm"></i> Pesan
+            </a>
+          </div>
+        </div>
+      `).join('');
+    }
+
+    // Jalankan saat dokumen siap
+    document.addEventListener('DOMContentLoaded', renderKatalog);
+
+    // Otomatis Render Ulang saat Data di Admin Diubah (Multi-Tab Sync)
+    window.addEventListener('storage', (e) => {
+      if (e.key === 'gazebo_katalog') {
+        renderKatalog();
       }
     });
-  }
-
-  // BACA & RENDER DATA KATALOG
-  function renderKatalog() {
-    const container = document.getElementById('katalogContainer');
-    const localData = localStorage.getItem('gazebo_katalog');
-    
-    // Ambil data dari localStorage admin CMS
-    const dataKatalog = localData ? JSON.parse(localData) : [];
-
-    if (dataKatalog.length === 0) {
-      container.innerHTML = `
-        <div class="col-span-full text-center py-12 text-gray-500">
-          <i class="fa-solid fa-box-open text-4xl mb-3 text-amber-800/40"></i>
-          <p class="text-sm">Belum ada produk katalog yang ditambahkan.</p>
-        </div>
-      `;
-      return;
-    }
-
-    container.innerHTML = dataKatalog.map(item => `
-      <div class="bg-white rounded-2xl overflow-hidden shadow-md border border-amber-100 flex flex-col justify-between hover:shadow-lg transition">
-        <div>
-          <div class="h-52 overflow-hidden bg-gray-200">
-            <img src="${item.img}" onerror="this.src='https://via.placeholder.com/600x400?text=Foto+Gazebo'" class="w-full h-full object-cover">
-          </div>
-          <div class="p-5">
-            <span class="bg-amber-100 text-amber-900 text-[10px] font-bold px-2.5 py-1 rounded-full uppercase">${item.bahan || 'Kayu Pilihan'}</span>
-            <h3 class="font-bold text-amber-950 text-lg mt-2">${item.nama}</h3>
-            <p class="text-xs text-gray-600 mt-2">${item.deskripsi || ''}</p>
-          </div>
-        </div>
-        <div class="p-5 pt-0 flex justify-between items-center border-t border-gray-100 mt-4">
-          <div>
-            <span class="text-[10px] text-gray-400 block">Harga Mulai</span>
-            <span class="font-extrabold text-amber-800 text-base">${item.harga}</span>
-          </div>
-          <a href="https://wa.me/6281234567890?text=Halo%20Admin,%20saya%20tertarik%20dengan%20${encodeURIComponent(item.nama)}" target="_blank" class="bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-bold px-4 py-2.5 rounded-xl transition flex items-center gap-1.5">
-            <i class="fa-brands fa-whatsapp text-sm"></i> Pesan
-          </a>
-        </div>
-      </div>
-    `).join('');
-  }
-
-  // Jalankan saat pertama kali halaman dimuat
-  document.addEventListener('DOMContentLoaded', renderKatalog);
-
-  // OTOMATIS BACA PERUBAHAN JIKA ADMIN MENGUBAH DATA DI TAB LAIN
-  window.addEventListener('storage', (e) => {
-    if (e.key === 'gazebo_katalog') {
-      renderKatalog();
-    }
-  });
-</script>
+  </script>
 </body>
 </html>
