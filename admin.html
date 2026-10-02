@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>CMS Admin Gazebo - Manajemen Foto & Video</title>
+  <title>CMS Admin Gazebo - Upload Ke /images/</title>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <script src="https://cdn.tailwindcss.com"></script>
   <script>
@@ -111,7 +111,7 @@
         <!-- Form Tambah/Ganti Produk & Foto -->
         <div class="bg-white p-5 sm:p-8 rounded-xl shadow-sm border border-gray-200">
           <h2 class="text-lg font-bold mb-4 text-amber-950 flex items-center gap-2">
-            <i class="fa-solid fa-plus-circle text-amber-800"></i> Tambah / Ganti Foto Katalog
+            <i class="fa-solid fa-plus-circle text-amber-800"></i> Tambah Produk & Upload Foto Ke Folder /images/
           </h2>
           <form id="katalogForm" class="space-y-4">
             <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
@@ -135,18 +135,18 @@
                 <input type="text" id="katHarga" required placeholder="12.500.000" class="w-full border rounded-lg p-2.5 mt-1 text-sm focus:ring-2 focus:ring-amber-800 focus:outline-none">
               </div>
               <div>
-                <label class="block text-xs sm:text-sm font-medium text-gray-700">Upload Foto Produk (File Image)</label>
+                <label class="block text-xs sm:text-sm font-medium text-gray-700">Upload Foto Produk (Ke Folder /images/)</label>
                 <input type="file" id="katFile" accept="image/*" class="w-full border rounded-lg p-2 mt-1 text-xs text-gray-600 focus:outline-none bg-gray-50">
               </div>
             </div>
 
             <div>
-              <label class="block text-xs sm:text-sm font-medium text-gray-700">Atau Gunakan URL Foto (Link Gambar)</label>
+              <label class="block text-xs sm:text-sm font-medium text-gray-700">Atau Masukkan URL Foto Eksternal (Opsional)</label>
               <input type="url" id="katUrl" placeholder="https://images.unsplash.com/..." class="w-full border rounded-lg p-2.5 mt-1 text-sm focus:ring-2 focus:ring-amber-800 focus:outline-none">
-              <span class="text-[11px] text-gray-400">Pilih salah satu: Upload file dari HP/Laptop ATAU masukkan link URL foto.</span>
+              <span class="text-[11px] text-gray-400">Jika memilih Upload File, gambar otomatis terupload via upload.php dan tersimpan di <b>images/gazebo_xxx.jpg</b>.</span>
             </div>
 
-            <button type="submit" class="w-full sm:w-auto bg-amber-800 hover:bg-amber-900 text-white px-6 py-2.5 rounded-lg text-sm font-medium transition shadow flex items-center justify-center gap-2">
+            <button type="submit" id="btnSubmitKatalog" class="w-full sm:w-auto bg-amber-800 hover:bg-amber-900 text-white px-6 py-2.5 rounded-lg text-sm font-medium transition shadow flex items-center justify-center gap-2">
               <i class="fa-solid fa-cloud-arrow-up"></i> Simpan ke Katalog
             </button>
           </form>
@@ -184,9 +184,8 @@
             </div>
 
             <div>
-              <label class="block text-xs sm:text-sm font-medium text-gray-700">Link YouTube Video / ID Embed</label>
-              <input type="text" id="vidUrl" required placeholder="https://www.youtube.com/watch?v=dQw4w9WgXcQ atau Kode Embed ID" class="w-full border rounded-lg p-2.5 mt-1 text-sm focus:ring-2 focus:ring-amber-800 focus:outline-none">
-              <span class="text-[11px] text-gray-400">Salin link video YouTube apa saja dari browser Anda.</span>
+              <label class="block text-xs sm:text-sm font-medium text-gray-700">Link YouTube Video</label>
+              <input type="text" id="vidUrl" required placeholder="https://www.youtube.com/watch?v=dQw4w9WgXcQ" class="w-full border rounded-lg p-2.5 mt-1 text-sm focus:ring-2 focus:ring-amber-800 focus:outline-none">
             </div>
 
             <button type="submit" class="w-full sm:w-auto bg-amber-800 hover:bg-amber-900 text-white px-6 py-2.5 rounded-lg text-sm font-medium transition shadow flex items-center justify-center gap-2">
@@ -209,20 +208,20 @@
   </div>
 
   <footer class="bg-gray-200 text-gray-600 text-center py-4 text-xs border-t border-gray-300">
-    <p>&copy; 2026 Admin CMS Gazebo Utama. Secure Media Controller.</p>
+    <p>&copy; 2026 Admin CMS Gazebo Utama. Connected to upload.php backend.</p>
   </footer>
 
 
-  <!-- ==================== LOGIK SCRIPT CMS ==================== -->
+  <!-- ==================== LOGIK SCRIPT CMS & UPLOAD PHP ==================== -->
   <script>
     const ADMIN_USER = "admin";
     const ADMIN_PASS = "gazebo123";
 
     // Data Bawaan (Default Data)
     const defaultKatalog = [
-      { id: 1, nama: "Gazebo Jati Ukir 2x2m", bahan: "Kayu Jati Jepara", harga: "12.500.000", img: "https://images.unsplash.com/photo-1540555700478-4be289fbecef?auto=format&fit=crop&w=600&q=80" },
-      { id: 2, nama: "Gazebo Kelapa Minimalis 3x3m", bahan: "Kayu Kelapa (Glugu)", harga: "15.000.000", img: "https://images.unsplash.com/photo-1512917774080-9991f1c4c750?auto=format&fit=crop&w=600&q=80" },
-      { id: 3, nama: "Saung Bambu Tradisional", bahan: "Bambu Petung", harga: "6.500.000", img: "https://images.unsplash.com/photo-1590490360182-c33d57733427?auto=format&fit=crop&w=600&q=80" }
+      { id: 1, nama: "Gazebo Jati Ukir 2x2m", bahan: "Kayu Jati Jepara", harga: "12.500.000", img: "images/gazebo_jati.jpg" },
+      { id: 2, nama: "Gazebo Kelapa Minimalis 3x3m", bahan: "Kayu Kelapa (Glugu)", harga: "15.000.000", img: "images/gazebo_kelapa.jpg" },
+      { id: 3, nama: "Saung Bambu Tradisional", bahan: "Bambu Petung", harga: "6.500.000", img: "images/saung_bambu.jpg" }
     ];
 
     const defaultVideo = [
@@ -230,7 +229,6 @@
       { id: 2, judul: "Proyek Saung Restoran Lembang", lokasi: "Lembang, Bandung", embed: "dQw4w9WgXcQ" }
     ];
 
-    // Inisialisasi Storage
     let katalogData = JSON.parse(localStorage.getItem('gazebo_katalog')) || defaultKatalog;
     let videoData = JSON.parse(localStorage.getItem('gazebo_video')) || defaultVideo;
 
@@ -244,7 +242,7 @@
       renderVideo();
     }
 
-    // Tab Handler
+    // Tab Switcher
     function switchTab(tab) {
       const katBtn = document.getElementById('tabKatalogBtn');
       const vidBtn = document.getElementById('tabVideoBtn');
@@ -264,13 +262,13 @@
       }
     }
 
-    // Toast Alert
+    // Toast Notification
     function showToast(msg, isSuccess = true) {
       const toast = document.getElementById('toast');
       toast.innerText = msg;
       toast.className = `p-4 rounded-xl text-sm font-medium transition shadow-md ${isSuccess ? 'bg-emerald-100 text-emerald-800 border border-emerald-200' : 'bg-red-100 text-red-800 border border-red-200'}`;
       toast.classList.remove('hidden');
-      setTimeout(() => toast.classList.add('hidden'), 3000);
+      setTimeout(() => toast.classList.add('hidden'), 3500);
     }
 
     // Render Foto Katalog
@@ -283,13 +281,14 @@
         card.className = "border rounded-xl overflow-hidden bg-gray-50 border-gray-200 flex flex-col justify-between";
         card.innerHTML = `
           <div>
-            <div class="h-40 overflow-hidden relative">
-              <img src="${item.img}" class="w-full h-full object-cover">
+            <div class="h-40 overflow-hidden relative bg-gray-200">
+              <img src="${item.img}" onerror="this.src='https://via.placeholder.com/600x400?text=Gambar+Tidak+Ditemukan'" class="w-full h-full object-cover">
               <span class="absolute top-2 left-2 bg-black/60 text-white text-[10px] px-2 py-0.5 rounded-full backdrop-blur-sm">${item.bahan}</span>
             </div>
             <div class="p-3">
               <h4 class="font-bold text-sm text-gray-900">${item.nama}</h4>
               <p class="text-xs text-amber-800 font-semibold mt-1">Rp ${item.harga}</p>
+              <p class="text-[10px] text-gray-400 mt-1 truncate"><i class="fa-solid fa-folder text-amber-700"></i> ${item.img}</p>
             </div>
           </div>
           <div class="p-3 pt-0 flex gap-2">
@@ -302,7 +301,7 @@
       });
     }
 
-    // Render Video
+    // Render Video Review
     function renderVideo() {
       const list = document.getElementById('videoList');
       list.innerHTML = '';
@@ -326,42 +325,82 @@
       });
     }
 
-    // Tambah Foto Katalog
-    document.getElementById('katalogForm').addEventListener('submit', function(e) {
+    // Submit Katalog (Sinkronisasi dengan upload.php)
+    document.getElementById('katalogForm').addEventListener('submit', async function(e) {
       e.preventDefault();
+
+      const btn = document.getElementById('btnSubmitKatalog');
+      const originalBtnText = btn.innerHTML;
+      btn.innerHTML = `<i class="fa-solid fa-spinner fa-spin"></i> Mengunggah Gambar...`;
+      btn.disabled = true;
+
       const nama = document.getElementById('katNama').value;
       const bahan = document.getElementById('katBahan').value;
       const harga = document.getElementById('katHarga').value;
       const fileInput = document.getElementById('katFile');
       const urlInput = document.getElementById('katUrl').value;
 
-      let imgUrl = urlInput || "https://images.unsplash.com/photo-1540555700478-4be289fbecef?auto=format&fit=crop&w=600&q=80";
+      let finalImagePath = urlInput;
 
+      // Jika file lokal dipilih, kirim menggunakan upload.php
       if (fileInput.files && fileInput.files[0]) {
-        const reader = new FileReader();
-        reader.onload = function(e) {
-          katalogData.push({ id: Date.now(), nama, bahan, harga, img: e.target.result });
-          saveKatalog();
-          showToast("Foto produk berhasil diunggah & disimpan!");
-          document.getElementById('katalogForm').reset();
-        };
-        reader.readAsDataURL(fileInput.files[0]);
-      } else {
-        katalogData.push({ id: Date.now(), nama, bahan, harga, img: imgUrl });
-        saveKatalog();
-        showToast("Produk katalog berhasil ditambahkan!");
-        document.getElementById('katalogForm').reset();
+        const formData = new FormData();
+        formData.append('katFile', fileInput.files[0]);
+
+        try {
+          const response = await fetch('upload.php', {
+            method: 'POST',
+            body: formData
+          });
+
+          const result = await response.json();
+
+          if (result.status === 'success') {
+            finalImagePath = result.file_url; // contoh hasil dari PHP: "images/gazebo_1727850000.jpg"
+          } else {
+            showToast("Gagal upload: " + result.message, false);
+            btn.innerHTML = originalBtnText;
+            btn.disabled = false;
+            return;
+          }
+        } catch (error) {
+          console.error("Upload Error:", error);
+          showToast("Gagal terhubung ke server upload.php", false);
+          btn.innerHTML = originalBtnText;
+          btn.disabled = false;
+          return;
+        }
+      } 
+
+      // Fallback jika tidak ada file & URL diisi kosong
+      if (!finalImagePath) {
+        finalImagePath = "images/default-gazebo.jpg";
       }
+
+      // Simpan data produk dengan path gambar lokal di folder /images/
+      katalogData.push({
+        id: Date.now(),
+        nama: nama,
+        bahan: bahan,
+        harga: harga,
+        img: finalImagePath
+      });
+
+      saveKatalog();
+      showToast("Produk & Gambar berhasil tersimpan di folder /images/!");
+      document.getElementById('katalogForm').reset();
+
+      btn.innerHTML = originalBtnText;
+      btn.disabled = false;
     });
 
-    // Tambah Video
+    // Submit Video Review
     document.getElementById('videoForm').addEventListener('submit', function(e) {
       e.preventDefault();
       const judul = document.getElementById('vidJudul').value;
       const lokasi = document.getElementById('vidLokasi').value;
       let rawUrl = document.getElementById('vidUrl').value;
 
-      // Extract Youtube Embed ID
       let embedId = "dQw4w9WgXcQ";
       if (rawUrl.includes("v=")) {
         embedId = rawUrl.split("v=")[1].split("&")[0];
@@ -379,10 +418,10 @@
 
     // Delete Operations
     function deleteKatalog(id) {
-      if(confirm("Yakin ingin menghapus foto produk ini?")) {
+      if(confirm("Yakin ingin menghapus produk ini?")) {
         katalogData = katalogData.filter(item => item.id !== id);
         saveKatalog();
-        showToast("Foto produk berhasil dihapus", false);
+        showToast("Produk berhasil dihapus", false);
       }
     }
 
@@ -394,7 +433,7 @@
       }
     }
 
-    // Authentication Checks
+    // Check Login Session
     const loginSection = document.getElementById('loginSection');
     const dashboardSection = document.getElementById('dashboardSection');
 
