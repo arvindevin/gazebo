@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Galeri Proyek & Pengerjaan - Gazebo Utama</title>
+  <title>Galeri Proyek & Pengerjaan - Hasbi Berugak</title>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <script src="https://cdn.tailwindcss.com"></script>
   <script>
@@ -36,37 +36,44 @@
       <a href="admin.html" class="hidden md:inline-flex bg-amber-800 hover:bg-amber-700 text-amber-100 text-xs px-3 py-2 rounded-lg items-center gap-1.5 transition">
         <i class="fa-solid fa-lock"></i> Admin CMS
       </a>
+      <button id="mobileMenuBtn" class="md:hidden text-amber-100 focus:outline-none p-2">
+        <i class="fa-solid fa-bars text-2xl" id="menuIcon"></i>
+      </button>
+    </div>
+    <div id="mobileMenu" class="hidden md:hidden bg-amber-900 border-t border-amber-800 px-4 py-4 space-y-3">
+      <a href="index.html" class="block text-sm font-medium text-amber-100 hover:text-amber-400 py-1.5 border-b border-amber-800/50">Beranda</a>
+      <a href="katalog.html" class="block text-sm font-medium text-amber-100 hover:text-amber-400 py-1.5 border-b border-amber-800/50">Katalog</a>
+      <a href="proyek.html" class="block text-sm font-bold text-amber-400 py-1.5 border-b border-amber-800/50">Galeri Proyek</a>
+      <a href="ulasan.html" class="block text-sm font-medium text-amber-100 hover:text-amber-400 py-1.5 border-b border-amber-800/50">Ulasan Pelanggan</a>
+      <a href="tentang-kami.html" class="block text-sm font-medium text-amber-100 hover:text-amber-400 py-1.5 border-b border-amber-800/50">Tentang Kami</a>
+      <a href="admin.html" class="block text-xs font-semibold text-amber-300 bg-amber-950 p-2.5 rounded-lg text-center mt-2">
+        <i class="fa-solid fa-lock mr-1"></i> Admin CMS
+      </a>
     </div>
   </header>
 
-  <!-- MAIN CONTENT -->
+  <!-- PROYEK CONTENT -->
   <main class="max-w-7xl mx-auto px-4 py-10 flex-1 w-full space-y-12">
-    
     <div class="text-center max-w-2xl mx-auto">
       <h1 class="text-3xl font-bold text-amber-950">Galeri Proyek & Pengerjaan</h1>
-      <p class="text-sm text-gray-600 mt-2">Dokumentasi foto dan video proses pembuatan hingga hasil akhir pemasangan gazebo di lapangan.</p>
+      <p class="text-sm text-gray-600 mt-2">Dokumentasi foto dan video proses perakitan hingga hasil akhir pemasangan gazebo di lapangan.</p>
     </div>
 
-    <!-- SEKSI 1: FOTO DOKUMENTASI PROYEK -->
+    <!-- SEKSI FOTO PROYEK -->
     <section>
       <h2 class="text-xl font-bold text-amber-900 mb-6 flex items-center gap-2 border-b pb-2">
         <i class="fa-solid fa-camera"></i> Foto Hasil Pemasangan & Proyek
       </h2>
-      <div id="galeriContainer" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-        <!-- Render otomatis via JS -->
-      </div>
+      <div id="galeriContainer" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6"></div>
     </section>
 
-    <!-- SEKSI 2: VIDEO DOKUMENTASI PENGERJAAN/PROYEK -->
+    <!-- SEKSI VIDEO PENGERJAAN PROYEK -->
     <section>
       <h2 class="text-xl font-bold text-amber-900 mb-6 flex items-center gap-2 border-b pb-2">
         <i class="fa-solid fa-film"></i> Video Pengerjaan Proyek
       </h2>
-      <div id="proyekVideoContainer" class="grid grid-cols-1 sm:grid-cols-2 gap-6">
-        <!-- Render otomatis via JS -->
-      </div>
+      <div id="proyekVideoContainer" class="grid grid-cols-1 sm:grid-cols-2 gap-6"></div>
     </section>
-
   </main>
 
   <!-- FOOTER -->
@@ -75,6 +82,24 @@
   </footer>
 
   <script>
+    // Toggle Mobile Menu
+    const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+    const mobileMenu = document.getElementById('mobileMenu');
+    const menuIcon = document.getElementById('menuIcon');
+
+    if (mobileMenuBtn) {
+      mobileMenuBtn.addEventListener('click', () => {
+        mobileMenu.classList.toggle('hidden');
+        if (mobileMenu.classList.contains('hidden')) {
+          menuIcon.classList.remove('fa-xmark');
+          menuIcon.classList.add('fa-bars');
+        } else {
+          menuIcon.classList.remove('fa-bars');
+          menuIcon.classList.add('fa-xmark');
+        }
+      });
+    }
+
     const defaultGaleri = [
       { id: 1, judul: "Gazebo Jati Ukir Villa Seminyak", ket: "Proyek Pemasangan Gazebo Kayu Jati 3x3m", img: "https://images.unsplash.com/photo-1540555700478-4be289fbecef?w=800" },
       { id: 2, judul: "Saung Bambu Resto Lembang", ket: "Proyek Pembuatan Saung Bambu Petung", img: "https://images.unsplash.com/photo-1512917774080-9991f1c4c750?w=800" }
@@ -87,7 +112,6 @@
     const galeriData = JSON.parse(localStorage.getItem('gazebo_galeri')) || defaultGaleri;
     const proyekVideoData = JSON.parse(localStorage.getItem('gazebo_proyek_video')) || defaultProyekVideo;
 
-    // Render Foto Galeri
     document.getElementById('galeriContainer').innerHTML = galeriData.map(item => `
       <div class="bg-white rounded-2xl overflow-hidden shadow-md border border-amber-100 hover:shadow-lg transition">
         <div class="h-52 overflow-hidden bg-gray-200">
@@ -100,7 +124,6 @@
       </div>
     `).join('');
 
-    // Render Video Pengerjaan Proyek
     document.getElementById('proyekVideoContainer').innerHTML = proyekVideoData.map(item => `
       <div class="bg-white rounded-2xl p-4 shadow-md border border-amber-100">
         <div class="aspect-video bg-black rounded-xl overflow-hidden mb-3">

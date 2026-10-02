@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>CMS Admin Gazebo - Upload Ke /images/</title>
+  <title>CMS Admin - Gazebo Utama</title>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <script src="https://cdn.tailwindcss.com"></script>
   <script>
@@ -18,454 +18,435 @@
     }
   </script>
 </head>
-<body class="bg-gray-100 text-gray-800 min-h-screen flex flex-col justify-between font-sans">
+<body class="bg-gray-100 font-sans text-gray-800 min-h-screen flex flex-col">
 
-  <!-- ==================== 1. FORM LOGIN ADMIN ==================== -->
-  <div id="loginSection" class="flex-1 flex items-center justify-center p-4">
-    <div class="bg-white p-6 sm:p-8 rounded-2xl shadow-xl border border-gray-200 w-full max-w-md">
-      <div class="text-center mb-6">
-        <div class="w-12 h-12 bg-amber-900 text-white rounded-xl flex items-center justify-center mx-auto mb-3 shadow">
-          <i class="fa-solid fa-user-shield text-xl"></i>
-        </div>
-        <h1 class="text-xl sm:text-2xl font-bold text-amber-950">Login Admin CMS</h1>
-        <p class="text-xs sm:text-sm text-gray-500 mt-1">Area terbatas khusus pengelola Gazebo Utama</p>
-      </div>
-
-      <div id="loginError" class="hidden mb-4 p-3 bg-red-100 border border-red-200 text-red-700 text-xs sm:text-sm rounded-lg flex items-center gap-2">
-        <i class="fa-solid fa-circle-exclamation text-red-500"></i>
-        <span>Username atau Password salah!</span>
-      </div>
-
-      <form id="loginForm" class="space-y-4">
+  <header class="bg-amber-950 text-amber-100 shadow-md">
+    <div class="max-w-7xl mx-auto px-4 py-4 flex justify-between items-center">
+      <div class="flex items-center gap-3">
+        <i class="fa-solid fa-screwdriver-wrench text-amber-400 text-2xl"></i>
         <div>
-          <label class="block text-xs sm:text-sm font-medium text-gray-700 mb-1">Username</label>
-          <div class="relative">
-            <span class="absolute inset-y-0 left-0 pl-3 flex items-center text-gray-400">
-              <i class="fa-solid fa-user text-sm"></i>
-            </span>
-            <input type="text" id="username" required placeholder="Masukkan username" class="w-full pl-9 pr-3 py-2.5 border rounded-lg text-sm focus:ring-2 focus:ring-amber-800 focus:outline-none">
-          </div>
+          <h1 class="font-bold text-lg text-amber-400">Dashboard Admin CMS</h1>
+          <p class="text-xs text-amber-200">Hasbi Berugak - Pengelolaan Konten Website</p>
         </div>
-
-        <div>
-          <label class="block text-xs sm:text-sm font-medium text-gray-700 mb-1">Password</label>
-          <div class="relative">
-            <span class="absolute inset-y-0 left-0 pl-3 flex items-center text-gray-400">
-              <i class="fa-solid fa-lock text-sm"></i>
-            </span>
-            <input type="password" id="password" required placeholder="••••••••" class="w-full pl-9 pr-3 py-2.5 border rounded-lg text-sm focus:ring-2 focus:ring-amber-800 focus:outline-none">
-          </div>
-        </div>
-
-        <button type="submit" class="w-full bg-amber-800 hover:bg-amber-900 text-white py-2.5 rounded-lg text-sm font-medium transition shadow-md">
-          Masuk ke Dashboard
-        </button>
-      </form>
-
-      <div class="mt-6 text-center">
-        <a href="index.html" class="text-xs text-amber-800 hover:underline flex items-center justify-center gap-1">
-          <i class="fa-solid fa-arrow-left"></i> Kembali ke Website Utama
-        </a>
       </div>
+      <a href="index.html" class="bg-amber-800 hover:bg-amber-700 text-xs px-3 py-2 rounded-lg transition flex items-center gap-1.5">
+        <i class="fa-solid fa-globe"></i> Lihat Website
+      </a>
     </div>
-  </div>
+  </header>
 
+  <main class="max-w-7xl mx-auto px-4 py-8 flex-1 w-full space-y-6">
 
-  <!-- ==================== 2. DASHBOARD ADMIN TERPROTEKSI ==================== -->
-  <div id="dashboardSection" class="hidden flex-1 flex flex-col">
-    <header class="bg-amber-900 text-white p-4 shadow-md sticky top-0 z-50">
-      <div class="max-w-6xl mx-auto flex justify-between items-center px-2">
-        <div class="flex items-center gap-2">
-          <i class="fa-solid fa-gauge text-amber-300"></i>
-          <h1 class="font-bold text-sm sm:text-base">Dashboard Admin Gazebo</h1>
-        </div>
-        <div class="flex items-center gap-3">
-          <a href="index.html" target="_blank" class="text-xs bg-amber-800 hover:bg-amber-700 px-3 py-1.5 rounded text-amber-100 flex items-center gap-1">
-            <i class="fa-solid fa-globe"></i> <span class="hidden sm:inline">Lihat Web</span>
-          </a>
-          <button id="logoutBtn" class="text-xs bg-red-600 hover:bg-red-700 text-white px-3 py-1.5 rounded flex items-center gap-1 transition">
-            <i class="fa-solid fa-right-from-bracket"></i> Keluar
-          </button>
-        </div>
-      </div>
-    </header>
+    <div id="toast" class="hidden fixed top-5 right-5 z-50 bg-amber-900 text-white px-5 py-3 rounded-xl shadow-2xl flex items-center gap-2 border border-amber-500">
+      <i class="fa-solid fa-circle-check text-amber-400"></i>
+      <span id="toastMsg" class="text-sm font-medium">Perubahan berhasil disimpan!</span>
+    </div>
 
-    <main class="p-4 sm:p-8 max-w-6xl mx-auto w-full flex-1 space-y-8">
+    <!-- PENGATURAN SERVER PHP -->
+    <div class="bg-amber-100 border border-amber-300 p-4 rounded-xl text-xs space-y-2">
+      <label class="font-bold text-amber-950 flex items-center gap-2">
+        <i class="fa-solid fa-server"></i> URL Upload Handler PHP:
+      </label>
+      <input type="url" id="phpUploadUrl" value="http://domain-hosting-anda.com/upload.php" class="w-full p-2 border rounded-lg bg-white text-gray-800 outline-none focus:ring-2 focus:ring-amber-800" placeholder="Masukkan URL lengkap file upload.php Anda">
+      <p class="text-amber-800 italic">*Setiap gambar yang diupload melalui file akan dikirim ke script PHP ini.</p>
+    </div>
 
-      <!-- TABS MANAJEMEN -->
-      <div class="flex border-b border-gray-300 space-x-2 sm:space-x-4">
-        <button id="tabKatalogBtn" onclick="switchTab('katalog')" class="py-2.5 px-4 font-semibold text-sm border-b-2 border-amber-800 text-amber-900 focus:outline-none flex items-center gap-2">
-          <i class="fa-solid fa-image"></i> Kelola Foto Katalog
-        </button>
-        <button id="tabVideoBtn" onclick="switchTab('video')" class="py-2.5 px-4 font-medium text-sm text-gray-500 hover:text-amber-800 focus:outline-none flex items-center gap-2">
-          <i class="fa-solid fa-video"></i> Kelola Video Review
-        </button>
-      </div>
+    <div class="flex flex-wrap gap-2 border-b border-gray-300 pb-3">
+      <button onclick="switchTab('katalog')" id="tab-katalog" class="tab-btn bg-amber-900 text-white text-xs sm:text-sm font-bold px-4 py-2.5 rounded-xl transition">
+        <i class="fa-solid fa-box-archive mr-1"></i> Katalog Produk
+      </button>
+      <button onclick="switchTab('proyek')" id="tab-proyek" class="tab-btn bg-white text-gray-700 hover:bg-amber-100 text-xs sm:text-sm font-bold px-4 py-2.5 rounded-xl transition">
+        <i class="fa-solid fa-images mr-1"></i> Galeri & Video Proyek
+      </button>
+      <button onclick="switchTab('ulasan')" id="tab-ulasan" class="tab-btn bg-white text-gray-700 hover:bg-amber-100 text-xs sm:text-sm font-bold px-4 py-2.5 rounded-xl transition">
+        <i class="fa-solid fa-comments mr-1"></i> Ulasan & Video Review
+      </button>
+    </div>
 
-      <!-- Notification Toast -->
-      <div id="toast" class="hidden p-4 rounded-xl text-sm font-medium transition shadow-md"></div>
-
-      <!-- ================= SEKSI 1: KELOLA FOTO KATALOG ================= -->
-      <div id="sectionKatalog" class="space-y-6">
-        
-        <!-- Form Tambah/Ganti Produk & Foto -->
-        <div class="bg-white p-5 sm:p-8 rounded-xl shadow-sm border border-gray-200">
-          <h2 class="text-lg font-bold mb-4 text-amber-950 flex items-center gap-2">
-            <i class="fa-solid fa-plus-circle text-amber-800"></i> Tambah Produk & Upload Foto Ke Folder /images/
-          </h2>
-          <form id="katalogForm" class="space-y-4">
-            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-              <div>
-                <label class="block text-xs sm:text-sm font-medium text-gray-700">Nama Produk Gazebo</label>
-                <input type="text" id="katNama" required placeholder="Contoh: Gazebo Jati Jepara 2x2m" class="w-full border rounded-lg p-2.5 mt-1 text-sm focus:ring-2 focus:ring-amber-800 focus:outline-none">
-              </div>
-              <div>
-                <label class="block text-xs sm:text-sm font-medium text-gray-700">Kategori / Bahan</label>
-                <select id="katBahan" class="w-full border rounded-lg p-2.5 mt-1 text-sm focus:ring-2 focus:ring-amber-800 focus:outline-none">
-                  <option>Kayu Jati Jepara</option>
-                  <option>Kayu Kelapa (Glugu)</option>
-                  <option>Bambu Petung</option>
-                </select>
-              </div>
-            </div>
-
-            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-              <div>
-                <label class="block text-xs sm:text-sm font-medium text-gray-700">Harga Estimasi (Rp)</label>
-                <input type="text" id="katHarga" required placeholder="12.500.000" class="w-full border rounded-lg p-2.5 mt-1 text-sm focus:ring-2 focus:ring-amber-800 focus:outline-none">
-              </div>
-              <div>
-                <label class="block text-xs sm:text-sm font-medium text-gray-700">Upload Foto Produk (Ke Folder /images/)</label>
-                <input type="file" id="katFile" accept="image/*" class="w-full border rounded-lg p-2 mt-1 text-xs text-gray-600 focus:outline-none bg-gray-50">
-              </div>
-            </div>
-
-            <div>
-              <label class="block text-xs sm:text-sm font-medium text-gray-700">Atau Masukkan URL Foto Eksternal (Opsional)</label>
-              <input type="url" id="katUrl" placeholder="https://images.unsplash.com/..." class="w-full border rounded-lg p-2.5 mt-1 text-sm focus:ring-2 focus:ring-amber-800 focus:outline-none">
-              <span class="text-[11px] text-gray-400">Jika memilih Upload File, gambar otomatis terupload via upload.php dan tersimpan di <b>images/gazebo_xxx.jpg</b>.</span>
-            </div>
-
-            <button type="submit" id="btnSubmitKatalog" class="w-full sm:w-auto bg-amber-800 hover:bg-amber-900 text-white px-6 py-2.5 rounded-lg text-sm font-medium transition shadow flex items-center justify-center gap-2">
-              <i class="fa-solid fa-cloud-arrow-up"></i> Simpan ke Katalog
-            </button>
-          </form>
-        </div>
-
-        <!-- Daftar Foto Katalog Aktif -->
-        <div class="bg-white p-5 sm:p-8 rounded-xl shadow-sm border border-gray-200">
-          <h3 class="text-base font-bold text-gray-800 mb-4">Daftar Foto Katalog Saat Ini</h3>
-          <div id="katalogList" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-            <!-- Item foto katalog akan dirender di sini via JS -->
+    <!-- TAB 1: KATALOG -->
+    <section id="sec-katalog" class="tab-content space-y-6">
+      <div class="bg-white p-6 rounded-2xl shadow-sm border border-gray-200">
+        <h2 class="text-lg font-bold text-amber-950 mb-4 flex items-center gap-2">
+          <i class="fa-solid fa-plus-circle text-amber-700"></i> Tambah Produk Gazebo
+        </h2>
+        <form id="formKatalog" class="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <div>
+            <label class="text-xs font-semibold text-gray-600">Nama Produk</label>
+            <input type="text" id="pNama" required placeholder="Contoh: Gazebo Jati Minimalis 2x2m" class="w-full mt-1 p-2.5 text-sm border rounded-lg focus:ring-2 focus:ring-amber-700 outline-none">
           </div>
-        </div>
-
-      </div>
-
-
-      <!-- ================= SEKSI 2: KELOLA VIDEO REVIEW ================= -->
-      <div id="sectionVideo" class="hidden space-y-6">
-        
-        <!-- Form Tambah/Ganti Video -->
-        <div class="bg-white p-5 sm:p-8 rounded-xl shadow-sm border border-gray-200">
-          <h2 class="text-lg font-bold mb-4 text-amber-950 flex items-center gap-2">
-            <i class="fa-solid fa-video text-amber-800"></i> Tambah / Ganti Video Review Youtube
-          </h2>
-          <form id="videoForm" class="space-y-4">
-            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-              <div>
-                <label class="block text-xs sm:text-sm font-medium text-gray-700">Judul Proyek Video</label>
-                <input type="text" id="vidJudul" required placeholder="Contoh: Pemasangan Gazebo Bali" class="w-full border rounded-lg p-2.5 mt-1 text-sm focus:ring-2 focus:ring-amber-800 focus:outline-none">
-              </div>
-              <div>
-                <label class="block text-xs sm:text-sm font-medium text-gray-700">Lokasi / Detail</label>
-                <input type="text" id="vidLokasi" placeholder="Contoh: Seminyak, Bali" class="w-full border rounded-lg p-2.5 mt-1 text-sm focus:ring-2 focus:ring-amber-800 focus:outline-none">
-              </div>
-            </div>
-
-            <div>
-              <label class="block text-xs sm:text-sm font-medium text-gray-700">Link YouTube Video</label>
-              <input type="text" id="vidUrl" required placeholder="https://www.youtube.com/watch?v=dQw4w9WgXcQ" class="w-full border rounded-lg p-2.5 mt-1 text-sm focus:ring-2 focus:ring-amber-800 focus:outline-none">
-            </div>
-
-            <button type="submit" class="w-full sm:w-auto bg-amber-800 hover:bg-amber-900 text-white px-6 py-2.5 rounded-lg text-sm font-medium transition shadow flex items-center justify-center gap-2">
-              <i class="fa-solid fa-film"></i> Simpan Video
-            </button>
-          </form>
-        </div>
-
-        <!-- Daftar Video Aktif -->
-        <div class="bg-white p-5 sm:p-8 rounded-xl shadow-sm border border-gray-200">
-          <h3 class="text-base font-bold text-gray-800 mb-4">Daftar Video Review Saat Ini</h3>
-          <div id="videoList" class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-            <!-- Item video akan dirender di sini via JS -->
+          <div>
+            <label class="text-xs font-semibold text-gray-600">Harga (Rp)</label>
+            <input type="text" id="pHarga" required placeholder="Contoh: Rp 12.500.000" class="w-full mt-1 p-2.5 text-sm border rounded-lg focus:ring-2 focus:ring-amber-700 outline-none">
           </div>
-        </div>
-
+          <div>
+            <label class="text-xs font-semibold text-gray-600">Bahan / Spesifikasi</label>
+            <input type="text" id="pBahan" placeholder="Kayu Jati Jepara Perhutani" class="w-full mt-1 p-2.5 text-sm border rounded-lg focus:ring-2 focus:ring-amber-700 outline-none">
+          </div>
+          <div>
+            <label class="text-xs font-semibold text-gray-600">Upload Gambar Produk (File PHP / URL Direct)</label>
+            <div class="flex gap-2 mt-1">
+              <input type="file" id="pFile" accept="image/*" class="w-1/2 text-xs border p-2 rounded-lg">
+              <input type="url" id="pUrl" placeholder="Atau paste URL gambar" class="w-1/2 p-2.5 text-xs border rounded-lg">
+            </div>
+          </div>
+          <div class="md:col-span-2">
+            <label class="text-xs font-semibold text-gray-600">Deskripsi Lengkap</label>
+            <textarea id="pDesk" rows="2" placeholder="Detail produk..." class="w-full mt-1 p-2.5 text-sm border rounded-lg focus:ring-2 focus:ring-amber-700 outline-none"></textarea>
+          </div>
+          <div class="md:col-span-2">
+            <button type="submit" class="bg-amber-900 hover:bg-amber-800 text-white font-bold text-xs px-6 py-3 rounded-xl transition">
+              <i class="fa-solid fa-save mr-1"></i> Simpan Produk
+            </button>
+          </div>
+        </form>
       </div>
 
-    </main>
-  </div>
+      <div class="bg-white p-6 rounded-2xl shadow-sm border border-gray-200">
+        <h3 class="font-bold text-gray-800 mb-4">Daftar Katalog Produk</h3>
+        <div id="listKatalog" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4"></div>
+      </div>
+    </section>
 
-  <footer class="bg-gray-200 text-gray-600 text-center py-4 text-xs border-t border-gray-300">
-    <p>&copy; 2026 Admin CMS Gazebo Utama. Connected to upload.php backend.</p>
-  </footer>
+    <!-- TAB 2: PROYEK -->
+    <section id="sec-proyek" class="tab-content hidden space-y-6">
+      <div class="bg-white p-6 rounded-2xl shadow-sm border border-gray-200">
+        <h2 class="text-lg font-bold text-amber-950 mb-4 flex items-center gap-2">
+          <i class="fa-solid fa-camera text-amber-700"></i> Tambah Foto Galeri Proyek
+        </h2>
+        <form id="formGaleri" class="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <div>
+            <label class="text-xs font-semibold text-gray-600">Judul Proyek</label>
+            <input type="text" id="gJudul" required placeholder="Contoh: Pemasangan Villa Seminyak Bali" class="w-full mt-1 p-2.5 text-sm border rounded-lg outline-none">
+          </div>
+          <div>
+            <label class="text-xs font-semibold text-gray-600">Keterangan / Lokasi</label>
+            <input type="text" id="gKet" placeholder="Ukuran 3x3m Kayu Jati Super" class="w-full mt-1 p-2.5 text-sm border rounded-lg outline-none">
+          </div>
+          <div class="md:col-span-2">
+            <label class="text-xs font-semibold text-gray-600">Upload Foto Proyek (File PHP / URL Direct)</label>
+            <div class="flex gap-2 mt-1">
+              <input type="file" id="gFile" accept="image/*" class="w-1/2 text-xs border p-2 rounded-lg">
+              <input type="url" id="gUrl" placeholder="Atau paste URL gambar" class="w-1/2 p-2.5 text-xs border rounded-lg">
+            </div>
+          </div>
+          <div class="md:col-span-2">
+            <button type="submit" class="bg-amber-900 hover:bg-amber-800 text-white font-bold text-xs px-6 py-3 rounded-xl transition">
+              <i class="fa-solid fa-save mr-1"></i> Simpan Foto Proyek
+            </button>
+          </div>
+        </form>
+      </div>
 
+      <div class="bg-white p-6 rounded-2xl shadow-sm border border-gray-200">
+        <h2 class="text-lg font-bold text-amber-950 mb-4 flex items-center gap-2">
+          <i class="fa-solid fa-film text-amber-700"></i> Tambah Video Pengerjaan Proyek
+        </h2>
+        <form id="formProyekVideo" class="grid grid-cols-1 md:grid-cols-3 gap-4">
+          <div>
+            <label class="text-xs font-semibold text-gray-600">Judul Video Pengerjaan</label>
+            <input type="text" id="pvJudul" required placeholder="Proses Perakitan Gazebo Jati" class="w-full mt-1 p-2.5 text-sm border rounded-lg outline-none">
+          </div>
+          <div>
+            <label class="text-xs font-semibold text-gray-600">Lokasi / Keterangan</label>
+            <input type="text" id="pvLokasi" placeholder="Seminyak, Bali" class="w-full mt-1 p-2.5 text-sm border rounded-lg outline-none">
+          </div>
+          <div>
+            <label class="text-xs font-semibold text-gray-600">ID Embed YouTube</label>
+            <input type="text" id="pvEmbed" required placeholder="Contoh: dQw4w9WgXcQ" class="w-full mt-1 p-2.5 text-sm border rounded-lg outline-none">
+          </div>
+          <div class="md:col-span-3">
+            <button type="submit" class="bg-amber-900 hover:bg-amber-800 text-white font-bold text-xs px-6 py-3 rounded-xl transition">
+              <i class="fa-solid fa-save mr-1"></i> Simpan Video Pengerjaan
+            </button>
+          </div>
+        </form>
+      </div>
 
-  <!-- ==================== LOGIK SCRIPT CMS & UPLOAD PHP ==================== -->
+      <div class="bg-white p-6 rounded-2xl shadow-sm border border-gray-200">
+        <h3 class="font-bold text-gray-800 mb-4">Daftar Foto & Video Proyek</h3>
+        <div id="listProyek" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4"></div>
+      </div>
+    </section>
+
+    <!-- TAB 3: ULASAN -->
+    <section id="sec-ulasan" class="tab-content hidden space-y-6">
+      <div class="bg-white p-6 rounded-2xl shadow-sm border border-gray-200">
+        <h2 class="text-lg font-bold text-amber-950 mb-4 flex items-center gap-2">
+          <i class="fa-solid fa-user-check text-amber-700"></i> Tambah Ulasan Teks Pelanggan
+        </h2>
+        <form id="formUlasan" class="grid grid-cols-1 md:grid-cols-3 gap-4">
+          <div>
+            <label class="text-xs font-semibold text-gray-600">Nama Pelanggan</label>
+            <input type="text" id="uNama" required placeholder="Bpk. Hendra" class="w-full mt-1 p-2.5 text-sm border rounded-lg outline-none">
+          </div>
+          <div>
+            <label class="text-xs font-semibold text-gray-600">Kota / Lokasi</label>
+            <input type="text" id="uKota" placeholder="Bandung" class="w-full mt-1 p-2.5 text-sm border rounded-lg outline-none">
+          </div>
+          <div>
+            <label class="text-xs font-semibold text-gray-600">Rating Bintang (1-5)</label>
+            <select id="uRating" class="w-full mt-1 p-2.5 text-sm border rounded-lg outline-none">
+              <option value="5">5 Bintang (Sangat Puas)</option>
+              <option value="4">4 Bintang (Puas)</option>
+            </select>
+          </div>
+          <div class="md:col-span-3">
+            <label class="text-xs font-semibold text-gray-600">Foto Pelanggan / Profil (File PHP / URL Direct)</label>
+            <div class="flex gap-2 mt-1">
+              <input type="file" id="uFile" accept="image/*" class="w-1/2 text-xs border p-2 rounded-lg">
+              <input type="url" id="uUrl" placeholder="Atau paste URL foto" class="w-1/2 p-2.5 text-xs border rounded-lg">
+            </div>
+          </div>
+          <div class="md:col-span-3">
+            <label class="text-xs font-semibold text-gray-600">Pesan Ulasan / Testimoni</label>
+            <textarea id="uPesan" required rows="2" placeholder="Tuliskan pengalaman kepuasan pelanggan..." class="w-full mt-1 p-2.5 text-sm border rounded-lg outline-none"></textarea>
+          </div>
+          <div class="md:col-span-3">
+            <button type="submit" class="bg-amber-900 hover:bg-amber-800 text-white font-bold text-xs px-6 py-3 rounded-xl transition">
+              <i class="fa-solid fa-save mr-1"></i> Simpan Ulasan Pelanggan
+            </button>
+          </div>
+        </form>
+      </div>
+
+      <div class="bg-white p-6 rounded-2xl shadow-sm border border-gray-200">
+        <h2 class="text-lg font-bold text-amber-950 mb-4 flex items-center gap-2">
+          <i class="fa-solid fa-video text-amber-700"></i> Tambah Video Review / Kesan Pelanggan
+        </h2>
+        <form id="formReviewVideo" class="grid grid-cols-1 md:grid-cols-3 gap-4">
+          <div>
+            <label class="text-xs font-semibold text-gray-600">Judul Video Review</label>
+            <input type="text" id="rvJudul" required placeholder="Testimoni Bpk. Hendra - Gazebo Jati 3x3m" class="w-full mt-1 p-2.5 text-sm border rounded-lg outline-none">
+          </div>
+          <div>
+            <label class="text-xs font-semibold text-gray-600">Kota / Lokasi</label>
+            <input type="text" id="rvLokasi" placeholder="Bandung, Jawa Barat" class="w-full mt-1 p-2.5 text-sm border rounded-lg outline-none">
+          </div>
+          <div>
+            <label class="text-xs font-semibold text-gray-600">ID Embed YouTube</label>
+            <input type="text" id="rvEmbed" required placeholder="Contoh: dQw4w9WgXcQ" class="w-full mt-1 p-2.5 text-sm border rounded-lg outline-none">
+          </div>
+          <div class="md:col-span-3">
+            <button type="submit" class="bg-amber-900 hover:bg-amber-800 text-white font-bold text-xs px-6 py-3 rounded-xl transition">
+              <i class="fa-solid fa-save mr-1"></i> Simpan Video Review
+            </button>
+          </div>
+        </form>
+      </div>
+
+      <div class="bg-white p-6 rounded-2xl shadow-sm border border-gray-200">
+        <h3 class="font-bold text-gray-800 mb-4">Daftar Ulasan & Video Review</h3>
+        <div id="listUlasan" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4"></div>
+      </div>
+    </section>
+
+  </main>
+
   <script>
-    const ADMIN_USER = "admin";
-    const ADMIN_PASS = "gazebo123";
-
-    // Data Bawaan (Default Data)
-    const defaultKatalog = [
-      { id: 1, nama: "Gazebo Jati Ukir 2x2m", bahan: "Kayu Jati Jepara", harga: "12.500.000", img: "images/gazebo_jati.jpg" },
-      { id: 2, nama: "Gazebo Kelapa Minimalis 3x3m", bahan: "Kayu Kelapa (Glugu)", harga: "15.000.000", img: "images/gazebo_kelapa.jpg" },
-      { id: 3, nama: "Saung Bambu Tradisional", bahan: "Bambu Petung", harga: "6.500.000", img: "images/saung_bambu.jpg" }
-    ];
-
-    const defaultVideo = [
-      { id: 1, judul: "Proyek Gazebo Villa Seminyak", lokasi: "Seminyak, Bali", embed: "dQw4w9WgXcQ" },
-      { id: 2, judul: "Proyek Saung Restoran Lembang", lokasi: "Lembang, Bandung", embed: "dQw4w9WgXcQ" }
-    ];
-
-    let katalogData = JSON.parse(localStorage.getItem('gazebo_katalog')) || defaultKatalog;
-    let videoData = JSON.parse(localStorage.getItem('gazebo_video')) || defaultVideo;
-
-    function saveKatalog() {
-      localStorage.setItem('gazebo_katalog', JSON.stringify(katalogData));
-      renderKatalog();
-    }
-
-    function saveVideo() {
-      localStorage.setItem('gazebo_video', JSON.stringify(videoData));
-      renderVideo();
-    }
-
-    // Tab Switcher
     function switchTab(tab) {
-      const katBtn = document.getElementById('tabKatalogBtn');
-      const vidBtn = document.getElementById('tabVideoBtn');
-      const katSec = document.getElementById('sectionKatalog');
-      const vidSec = document.getElementById('sectionVideo');
+      document.querySelectorAll('.tab-content').forEach(el => el.classList.add('hidden'));
+      document.querySelectorAll('.tab-btn').forEach(el => {
+        el.classList.remove('bg-amber-900', 'text-white');
+        el.classList.add('bg-white', 'text-gray-700');
+      });
 
-      if(tab === 'katalog') {
-        katSec.classList.remove('hidden');
-        vidSec.classList.add('hidden');
-        katBtn.className = "py-2.5 px-4 font-semibold text-sm border-b-2 border-amber-800 text-amber-900 focus:outline-none flex items-center gap-2";
-        vidBtn.className = "py-2.5 px-4 font-medium text-sm text-gray-500 hover:text-amber-800 focus:outline-none flex items-center gap-2";
-      } else {
-        katSec.classList.add('hidden');
-        vidSec.classList.remove('hidden');
-        vidBtn.className = "py-2.5 px-4 font-semibold text-sm border-b-2 border-amber-800 text-amber-900 focus:outline-none flex items-center gap-2";
-        katBtn.className = "py-2.5 px-4 font-medium text-sm text-gray-500 hover:text-amber-800 focus:outline-none flex items-center gap-2";
-      }
+      document.getElementById('sec-' + tab).classList.remove('hidden');
+      const activeBtn = document.getElementById('tab-' + tab);
+      activeBtn.classList.remove('bg-white', 'text-gray-700');
+      activeBtn.classList.add('bg-amber-900', 'text-white');
     }
 
-    // Toast Notification
-    function showToast(msg, isSuccess = true) {
+    function showToast(msg) {
       const toast = document.getElementById('toast');
-      toast.innerText = msg;
-      toast.className = `p-4 rounded-xl text-sm font-medium transition shadow-md ${isSuccess ? 'bg-emerald-100 text-emerald-800 border border-emerald-200' : 'bg-red-100 text-red-800 border border-red-200'}`;
+      document.getElementById('toastMsg').innerText = msg;
       toast.classList.remove('hidden');
-      setTimeout(() => toast.classList.add('hidden'), 3500);
+      setTimeout(() => toast.classList.add('hidden'), 3000);
     }
 
-    // Render Foto Katalog
-    function renderKatalog() {
-      const list = document.getElementById('katalogList');
-      list.innerHTML = '';
-      
-      katalogData.forEach((item) => {
-        const card = document.createElement('div');
-        card.className = "border rounded-xl overflow-hidden bg-gray-50 border-gray-200 flex flex-col justify-between";
-        card.innerHTML = `
-          <div>
-            <div class="h-40 overflow-hidden relative bg-gray-200">
-              <img src="${item.img}" onerror="this.src='https://via.placeholder.com/600x400?text=Gambar+Tidak+Ditemukan'" class="w-full h-full object-cover">
-              <span class="absolute top-2 left-2 bg-black/60 text-white text-[10px] px-2 py-0.5 rounded-full backdrop-blur-sm">${item.bahan}</span>
-            </div>
-            <div class="p-3">
-              <h4 class="font-bold text-sm text-gray-900">${item.nama}</h4>
-              <p class="text-xs text-amber-800 font-semibold mt-1">Rp ${item.harga}</p>
-              <p class="text-[10px] text-gray-400 mt-1 truncate"><i class="fa-solid fa-folder text-amber-700"></i> ${item.img}</p>
-            </div>
-          </div>
-          <div class="p-3 pt-0 flex gap-2">
-            <button onclick="deleteKatalog(${item.id})" class="w-full bg-red-100 hover:bg-red-200 text-red-700 text-xs py-1.5 rounded font-medium transition flex items-center justify-center gap-1">
-              <i class="fa-solid fa-trash"></i> Hapus
-            </button>
-          </div>
-        `;
-        list.appendChild(card);
-      });
-    }
-
-    // Render Video Review
-    function renderVideo() {
-      const list = document.getElementById('videoList');
-      list.innerHTML = '';
-
-      videoData.forEach((item) => {
-        const card = document.createElement('div');
-        card.className = "border rounded-xl p-3 bg-gray-50 border-gray-200 flex flex-col justify-between";
-        card.innerHTML = `
-          <div>
-            <div class="aspect-video bg-black rounded-lg overflow-hidden mb-2">
-              <iframe class="w-full h-full" src="https://www.youtube.com/embed/${item.embed}" allowfullscreen></iframe>
-            </div>
-            <h4 class="font-bold text-sm text-gray-900">${item.judul}</h4>
-            <p class="text-xs text-gray-500">${item.lokasi}</p>
-          </div>
-          <button onclick="deleteVideo(${item.id})" class="mt-3 w-full bg-red-100 hover:bg-red-200 text-red-700 text-xs py-1.5 rounded font-medium transition flex items-center justify-center gap-1">
-            <i class="fa-solid fa-trash"></i> Hapus Video
-          </button>
-        `;
-        list.appendChild(card);
-      });
-    }
-
-    // Submit Katalog (Sinkronisasi dengan upload.php)
-    document.getElementById('katalogForm').addEventListener('submit', async function(e) {
-      e.preventDefault();
-
-      const btn = document.getElementById('btnSubmitKatalog');
-      const originalBtnText = btn.innerHTML;
-      btn.innerHTML = `<i class="fa-solid fa-spinner fa-spin"></i> Mengunggah Gambar...`;
-      btn.disabled = true;
-
-      const nama = document.getElementById('katNama').value;
-      const bahan = document.getElementById('katBahan').value;
-      const harga = document.getElementById('katHarga').value;
-      const fileInput = document.getElementById('katFile');
-      const urlInput = document.getElementById('katUrl').value;
-
-      let finalImagePath = urlInput;
-
-      // Jika file lokal dipilih, kirim menggunakan upload.php
+    // UPLOAD IMAGE VIA PHP SERVER
+    async function uploadImagePHP(fileInput, urlInput, fallback) {
       if (fileInput.files && fileInput.files[0]) {
+        const phpUrl = document.getElementById('phpUploadUrl').value.trim();
         const formData = new FormData();
-        formData.append('katFile', fileInput.files[0]);
+        formData.append('image', fileInput.files[0]);
 
         try {
-          const response = await fetch('upload.php', {
+          const res = await fetch(phpUrl, {
             method: 'POST',
             body: formData
           });
-
-          const result = await response.json();
-
-          if (result.status === 'success') {
-            finalImagePath = result.file_url; // contoh hasil dari PHP: "images/gazebo_1727850000.jpg"
+          const data = await res.json();
+          if (data.status === 'success') {
+            return data.url;
           } else {
-            showToast("Gagal upload: " + result.message, false);
-            btn.innerHTML = originalBtnText;
-            btn.disabled = false;
-            return;
+            alert('Gagal Upload via PHP: ' + data.message);
           }
-        } catch (error) {
-          console.error("Upload Error:", error);
-          showToast("Gagal terhubung ke server upload.php", false);
-          btn.innerHTML = originalBtnText;
-          btn.disabled = false;
-          return;
+        } catch (e) {
+          console.error("Upload PHP Gagal:", e);
+          alert('Terjadi kesalahan koneksi ke server upload.php');
         }
-      } 
-
-      // Fallback jika tidak ada file & URL diisi kosong
-      if (!finalImagePath) {
-        finalImagePath = "images/default-gazebo.jpg";
       }
+      return urlInput.value.trim() !== '' ? urlInput.value.trim() : fallback;
+    }
 
-      // Simpan data produk dengan path gambar lokal di folder /images/
-      katalogData.push({
+    // 1. SIMPAN KATALOG
+    document.getElementById('formKatalog').addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const imgUrl = await uploadImagePHP(document.getElementById('pFile'), document.getElementById('pUrl'), 'https://images.unsplash.com/photo-1540555700478-4be289fbecef?w=800');
+      const data = JSON.parse(localStorage.getItem('gazebo_katalog')) || [];
+      data.push({
         id: Date.now(),
-        nama: nama,
-        bahan: bahan,
-        harga: harga,
-        img: finalImagePath
+        nama: document.getElementById('pNama').value,
+        harga: document.getElementById('pHarga').value,
+        bahan: document.getElementById('pBahan').value,
+        deskripsi: document.getElementById('pDesk').value,
+        img: imgUrl
       });
-
-      saveKatalog();
-      showToast("Produk & Gambar berhasil tersimpan di folder /images/!");
-      document.getElementById('katalogForm').reset();
-
-      btn.innerHTML = originalBtnText;
-      btn.disabled = false;
+      localStorage.setItem('gazebo_katalog', JSON.stringify(data));
+      showToast("Produk berhasil ditambahkan!");
+      e.target.reset();
+      renderAll();
     });
 
-    // Submit Video Review
-    document.getElementById('videoForm').addEventListener('submit', function(e) {
+    // 2. SIMPAN FOTO PROYEK
+    document.getElementById('formGaleri').addEventListener('submit', async (e) => {
       e.preventDefault();
-      const judul = document.getElementById('vidJudul').value;
-      const lokasi = document.getElementById('vidLokasi').value;
-      let rawUrl = document.getElementById('vidUrl').value;
-
-      let embedId = "dQw4w9WgXcQ";
-      if (rawUrl.includes("v=")) {
-        embedId = rawUrl.split("v=")[1].split("&")[0];
-      } else if (rawUrl.includes("youtu.be/")) {
-        embedId = rawUrl.split("youtu.be/")[1].split("?")[0];
-      } else if (rawUrl.trim().length > 0) {
-        embedId = rawUrl.trim();
-      }
-
-      videoData.push({ id: Date.now(), judul, lokasi, embed: embedId });
-      saveVideo();
-      showToast("Video review berhasil diperbarui!");
-      document.getElementById('videoForm').reset();
+      const imgUrl = await uploadImagePHP(document.getElementById('gFile'), document.getElementById('gUrl'), 'https://images.unsplash.com/photo-1512917774080-9991f1c4c750?w=800');
+      const data = JSON.parse(localStorage.getItem('gazebo_galeri')) || [];
+      data.push({
+        id: Date.now(),
+        judul: document.getElementById('gJudul').value,
+        ket: document.getElementById('gKet').value,
+        img: imgUrl
+      });
+      localStorage.setItem('gazebo_galeri', JSON.stringify(data));
+      showToast("Foto proyek berhasil ditambahkan!");
+      e.target.reset();
+      renderAll();
     });
 
-    // Delete Operations
-    function deleteKatalog(id) {
-      if(confirm("Yakin ingin menghapus produk ini?")) {
-        katalogData = katalogData.filter(item => item.id !== id);
-        saveKatalog();
-        showToast("Produk berhasil dihapus", false);
-      }
-    }
-
-    function deleteVideo(id) {
-      if(confirm("Yakin ingin menghapus video ini?")) {
-        videoData = videoData.filter(item => item.id !== id);
-        saveVideo();
-        showToast("Video berhasil dihapus", false);
-      }
-    }
-
-    // Check Login Session
-    const loginSection = document.getElementById('loginSection');
-    const dashboardSection = document.getElementById('dashboardSection');
-
-    function checkAuth() {
-      if (localStorage.getItem('isGazeboAdminLoggedIn') === 'true') {
-        loginSection.classList.add('hidden');
-        dashboardSection.classList.remove('hidden');
-        renderKatalog();
-        renderVideo();
-      } else {
-        loginSection.classList.remove('hidden');
-        dashboardSection.classList.add('hidden');
-      }
-    }
-
-    document.getElementById('loginForm').addEventListener('submit', (e) => {
+    // 3. SIMPAN VIDEO PENGERJAAN PROYEK
+    document.getElementById('formProyekVideo').addEventListener('submit', (e) => {
       e.preventDefault();
-      if (document.getElementById('username').value.trim() === ADMIN_USER && 
-          document.getElementById('password').value.trim() === ADMIN_PASS) {
-        localStorage.setItem('isGazeboAdminLoggedIn', 'true');
-        checkAuth();
-      } else {
-        document.getElementById('loginError').classList.remove('hidden');
+      const data = JSON.parse(localStorage.getItem('gazebo_proyek_video')) || [];
+      data.push({
+        id: Date.now(),
+        judul: document.getElementById('pvJudul').value,
+        lokasi: document.getElementById('pvLokasi').value,
+        embed: document.getElementById('pvEmbed').value
+      });
+      localStorage.setItem('gazebo_proyek_video', JSON.stringify(data));
+      showToast("Video pengerjaan berhasil ditambahkan!");
+      e.target.reset();
+      renderAll();
+    });
+
+    // 4. SIMPAN ULASAN TEKS
+    document.getElementById('formUlasan').addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const imgUrl = await uploadImagePHP(document.getElementById('uFile'), document.getElementById('uUrl'), 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=300');
+      const data = JSON.parse(localStorage.getItem('gazebo_ulasan')) || [];
+      data.push({
+        id: Date.now(),
+        nama: document.getElementById('uNama').value,
+        kota: document.getElementById('uKota').value,
+        rating: document.getElementById('uRating').value,
+        pesan: document.getElementById('uPesan').value,
+        img: imgUrl
+      });
+      localStorage.setItem('gazebo_ulasan', JSON.stringify(data));
+      showToast("Ulasan pelanggan berhasil ditambahkan!");
+      e.target.reset();
+      renderAll();
+    });
+
+    // 5. SIMPAN VIDEO REVIEW PELANGGAN
+    document.getElementById('formReviewVideo').addEventListener('submit', (e) => {
+      e.preventDefault();
+      const data = JSON.parse(localStorage.getItem('gazebo_video')) || [];
+      data.push({
+        id: Date.now(),
+        judul: document.getElementById('rvJudul').value,
+        lokasi: document.getElementById('rvLokasi').value,
+        embed: document.getElementById('rvEmbed').value
+      });
+      localStorage.setItem('gazebo_video', JSON.stringify(data));
+      showToast("Video review pelanggan berhasil ditambahkan!");
+      e.target.reset();
+      renderAll();
+    });
+
+    function deleteItem(key, id) {
+      if (confirm("Apakah Anda yakin ingin menghapus data ini?")) {
+        let data = JSON.parse(localStorage.getItem(key)) || [];
+        data = data.filter(item => item.id !== id);
+        localStorage.setItem(key, JSON.stringify(data));
+        showToast("Data berhasil dihapus!");
+        renderAll();
       }
-    });
+    }
 
-    document.getElementById('logoutBtn').addEventListener('click', () => {
-      localStorage.removeItem('isGazeboAdminLoggedIn');
-      checkAuth();
-    });
+    function renderAll() {
+      const katalog = JSON.parse(localStorage.getItem('gazebo_katalog')) || [];
+      document.getElementById('listKatalog').innerHTML = katalog.map(item => `
+        <div class="border rounded-xl p-3 bg-gray-50 flex flex-col justify-between">
+          <div>
+            <img src="${item.img}" class="h-32 w-full object-cover rounded-lg mb-2">
+            <h4 class="font-bold text-sm text-gray-800">${item.nama}</h4>
+            <p class="text-xs font-semibold text-amber-800">${item.harga}</p>
+          </div>
+          <button onclick="deleteItem('gazebo_katalog', ${item.id})" class="mt-3 bg-red-600 hover:bg-red-700 text-white text-xs py-1.5 rounded-lg w-full">Hapus</button>
+        </div>
+      `).join('');
 
-    checkAuth();
+      const galeri = JSON.parse(localStorage.getItem('gazebo_galeri')) || [];
+      const proyekVideo = JSON.parse(localStorage.getItem('gazebo_proyek_video')) || [];
+      document.getElementById('listProyek').innerHTML = `
+        ${galeri.map(item => `
+          <div class="border rounded-xl p-3 bg-gray-50 flex flex-col justify-between">
+            <div>
+              <img src="${item.img}" class="h-32 w-full object-cover rounded-lg mb-2">
+              <h4 class="font-bold text-xs text-gray-800">[Foto] ${item.judul}</h4>
+            </div>
+            <button onclick="deleteItem('gazebo_galeri', ${item.id})" class="mt-3 bg-red-600 hover:bg-red-700 text-white text-xs py-1.5 rounded-lg w-full">Hapus</button>
+          </div>
+        `).join('')}
+        ${proyekVideo.map(item => `
+          <div class="border rounded-xl p-3 bg-amber-50 flex flex-col justify-between">
+            <div>
+              <div class="h-24 bg-black text-white text-xs flex items-center justify-center rounded-lg mb-2">YouTube: ${item.embed}</div>
+              <h4 class="font-bold text-xs text-gray-800">[Video Proyek] ${item.judul}</h4>
+            </div>
+            <button onclick="deleteItem('gazebo_proyek_video', ${item.id})" class="mt-3 bg-red-600 hover:bg-red-700 text-white text-xs py-1.5 rounded-lg w-full">Hapus</button>
+          </div>
+        `).join('')}
+      `;
+
+      const ulasan = JSON.parse(localStorage.getItem('gazebo_ulasan')) || [];
+      const reviewVideo = JSON.parse(localStorage.getItem('gazebo_video')) || [];
+      document.getElementById('listUlasan').innerHTML = `
+        ${ulasan.map(item => `
+          <div class="border rounded-xl p-3 bg-gray-50 flex flex-col justify-between">
+            <div>
+              <h4 class="font-bold text-xs text-gray-800">[Ulasan] ${item.nama} (${item.kota})</h4>
+              <p class="text-xs text-gray-600 italic mt-1">"${item.pesan}"</p>
+            </div>
+            <button onclick="deleteItem('gazebo_ulasan', ${item.id})" class="mt-3 bg-red-600 hover:bg-red-700 text-white text-xs py-1.5 rounded-lg w-full">Hapus</button>
+          </div>
+        `).join('')}
+        ${reviewVideo.map(item => `
+          <div class="border rounded-xl p-3 bg-amber-50 flex flex-col justify-between">
+            <div>
+              <div class="h-24 bg-black text-white text-xs flex items-center justify-center rounded-lg mb-2">YouTube: ${item.embed}</div>
+              <h4 class="font-bold text-xs text-gray-800">[Video Review] ${item.judul}</h4>
+            </div>
+            <button onclick="deleteItem('gazebo_video', ${item.id})" class="mt-3 bg-red-600 hover:bg-red-700 text-white text-xs py-1.5 rounded-lg w-full">Hapus</button>
+          </div>
+        `).join('')}
+      `;
+    }
+
+    renderAll();
   </script>
 </body>
 </html>

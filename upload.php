@@ -1,36 +1,63 @@
 <?php
+header('Access-Control-Allow-Origin: *');
+header('Access-Control-Allow-Methods: POST, OPTIONS');
+header('Access-Control-Allow-Headers: Content-Type');
 header('Content-Type: application/json');
 
-// Pastikan folder /images/ sudah ada
-$target_dir = "images/";
-if (!file_exists($target_dir)) {
-    mkdir($target_dir, 0777, true);
+if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
+    http_response_code(200);
+    exit();
 }
 
-if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_FILES['katFile'])) {
-    $file = $_FILES['katFile'];
-    $file_extension = pathinfo($file['name'], PATHINFO_EXTENSION);
-    
-    // Buat nama file unik agar tidak saling menimpa
-    $new_filename = 'gazebo_' . time() . '.' . $file_extension;
-    $target_file = $target_dir . $new_filename;
-
-    if (move_uploaded_file($file['tmp_name'], $target_file)) {
-        echo json_encode([
-            'status' => 'success',
-            'file_url' => $target_file,
-            'message' => 'File berhasil disimpan di folder /images/'
-        ]);
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    if (isset($_FILES['image']) && $_FILES['image']['error'] === UPLOAD_ERR_OK) {
+        $fileTmpPath = $_FILES['image']['tmp_name'];
+        $fileName = $_FILES['image']['name'];
+        $fileSize = $_FILES['image']['size'];
+        $fileType = $_FILES['image']['type'];
+        
+        $fileNameCmps = explode(".", $fileName);
+        $fileExtension = strtolower(end($fileNameCmps));
+        
+        $allowedExtensions = array('jpg', 'jpeg', 'png', 'webp', 'gif');
+        
+        if (in_array($fileExtension, $allowedExtensions)) {
+            $newFileName = md5(time() . $fileName) . '.' . $fileExtension;
+            $uploadFileDir = './uploads/';
+            
+            if (!is_dir($uploadFileDir)) {
+                mkdir($uploadFileDir, 0755, true);
+            }
+            
+            $dest_path = $uploadFileDir . $newFileName;
+            
+            if (move_uploaded_file($fileTmpPath, $dest_path)) {
+                $protocol = isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? "https" : "http";
+                $host = $_SERVER['HTTP_HOST'];
+                $scriptDir = dirname($_SERVER['SCRIPT_NAME']);
+                $scriptDir = rtrim($scriptDir, '/\\');
+                
+                $fullUrl = $protocol . "://" . $host . $scriptDir . "/uploads/" . $newFileName;
+                
+                echo json_encode([
+                    'status' => 'success',
+                    'url' => $fullUrl
+                ]);
+                exit();
+            } else {
+                echo json_encode(['status' => 'error', 'message' => 'Gagal memindahkan file ke folder uploads']);
+                exit();
+            }
+        } else {
+            echo json_encode(['status' => 'error', 'message' => 'Format file tidak diizinkan. Hanya JPG, PNG, WEBP, GIF.']);
+            exit();
+        }
     } else {
-        echo json_encode([
-            'status' => 'error',
-            'message' => 'Gagal mengunggah file'
-        ]);
+        echo json_encode(['status' => 'error', 'message' => 'File tidak ditemukan atau terjadi kesalahan saat upload.']);
+        exit();
     }
 } else {
-    echo json_encode([
-        'status' => 'error',
-        'message' => 'Tidak ada file yang diunggah'
-    ]);
+    echo json_encode(['status' => 'error', 'message' => 'Metode request tidak valid.']);
+    exit();
 }
 ?>

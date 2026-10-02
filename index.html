@@ -3,222 +3,117 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Spesialis Pembuatan & Penjualan Gazebo Berkualitas</title>
-  
-  <!-- Font Awesome Icons -->
+  <title>Gazebo Utama - Produsen Gazebo Kayu Jati & Kelapa</title>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-  
-  <!-- Tailwind CSS CDN -->
   <script src="https://cdn.tailwindcss.com"></script>
   <script>
     tailwind.config = {
       theme: {
         extend: {
           colors: {
-            amber: {
-              700: '#b45309',
-              800: '#92400e',
-              900: '#78350f',
-            }
+            amber: { 700: '#b45309', 800: '#92400e', 900: '#78350f', 950: '#451a03' }
           }
         }
       }
     }
   </script>
 </head>
-<body class="bg-amber-50/30 text-gray-800 font-sans antialiased">
+<body class="bg-amber-50/30 text-gray-800 font-sans min-h-screen flex flex-col justify-between">
 
-  <!-- Navigation Bar Responsive -->
-  <nav class="bg-white/95 backdrop-blur-md sticky top-0 z-50 border-b border-amber-100 shadow-sm">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-      <div class="flex justify-between h-20 items-center">
-        <!-- Logo -->
-        <a href="index.html" class="flex items-center gap-3">
-          <div class="w-10 h-10 bg-amber-800 rounded-lg flex items-center justify-center text-white font-bold text-xl shadow-md">
-            <i class="fa-solid fa-tree"></i>
-          </div>
-          <div>
-            <span class="text-lg sm:text-xl font-bold text-amber-900 tracking-wide block leading-none">HASBI BERUGAK</span>
-            <span class="text-[10px] sm:text-xs text-amber-700 font-medium">Pengrajin Gazebo Kayu & Bambu</span>
-          </div>
-        </a>
-
-        <!-- Desktop Menu (Tampil di Laptop/Komputer) -->
-        <div class="hidden lg:flex items-center space-x-8 font-medium text-gray-700">
-          <a href="index.html" class="text-amber-800 font-semibold border-b-2 border-amber-800 pb-1">Beranda</a>
-          <a href="katalog.html" class="hover:text-amber-800 transition">Katalog Produk</a>
-          <a href="proyek.html" class="hover:text-amber-800 transition">Hasil Proyek</a>
-          <a href="tentang-kami.html" class="hover:text-amber-800 transition">Tentang Kami</a>
-          <a href="admin.html" class="text-xs bg-gray-100 hover:bg-gray-200 text-gray-600 px-3 py-1.5 rounded-full transition">Admin CMS</a>
-        </div>
-
-        <!-- Tombol WA Desktop -->
-        <div class="hidden lg:flex">
-          <a href="https://wa.me/6281959641829?text=Halo%20Admin,%20saya%20ingin%20konsultasi%20pembuatan%20gazebo" target="_blank" class="bg-emerald-600 hover:bg-emerald-700 text-white px-5 py-2.5 rounded-full font-medium shadow-md hover:shadow-lg transition flex items-center gap-2 text-sm">
-            <i class="fa-brands fa-whatsapp text-lg"></i>
-            <span>Konsultasi Gratis</span>
-          </a>
-        </div>
-
-        <!-- Tombol Hamburger (Hanya Tampil di Tablet & HP / < lg) -->
-        <div class="flex lg:hidden items-center gap-2">
-          <a href="https://wa.me/6281234567890?text=Halo%20Admin" target="_blank" class="bg-emerald-600 text-white p-2.5 rounded-full text-sm sm:hidden">
-            <i class="fa-brands fa-whatsapp text-lg"></i>
-          </a>
-          <button id="mobileMenuBtn" type="button" class="text-amber-900 hover:text-amber-700 focus:outline-none p-2 rounded-lg bg-amber-50 border border-amber-200" aria-label="Toggle Navigation">
-            <i id="menuIcon" class="fa-solid fa-bars text-2xl"></i>
-          </button>
-        </div>
-      </div>
+  <!-- HEADER / NAVBAR -->
+  <header class="bg-amber-950 text-amber-100 sticky top-0 z-50 shadow-md">
+    <div class="max-w-7xl mx-auto px-4 py-4 flex justify-between items-center">
+      <a href="index.html" class="flex items-center gap-2 font-bold text-lg sm:text-xl text-amber-400">
+        <i class="fa-solid fa-campground text-2xl"></i> Gazebo Utama
+      </a>
+      <nav class="hidden md:flex space-x-6 text-sm font-medium">
+        <a href="index.html" class="text-amber-400 font-semibold border-b-2 border-amber-400 pb-1">Beranda</a>
+        <a href="katalog.html" class="hover:text-amber-400 transition">Katalog</a>
+        <a href="proyek.html" class="hover:text-amber-400 transition">Galeri Proyek</a>
+        <a href="ulasan.html" class="hover:text-amber-400 transition">Ulasan Pelanggan</a>
+        <a href="tentang-kami.html" class="hover:text-amber-400 transition">Tentang Kami</a>
+      </nav>
+      <a href="admin.html" class="hidden md:inline-flex bg-amber-800 hover:bg-amber-700 text-amber-100 text-xs px-3 py-2 rounded-lg items-center gap-1.5 transition">
+        <i class="fa-solid fa-lock"></i> Admin CMS
+      </a>
+      <button id="mobileMenuBtn" class="md:hidden text-amber-100 focus:outline-none p-2">
+        <i class="fa-solid fa-bars text-2xl" id="menuIcon"></i>
+      </button>
     </div>
+    <div id="mobileMenu" class="hidden md:hidden bg-amber-900 border-t border-amber-800 px-4 py-4 space-y-3">
+      <a href="index.html" class="block text-sm font-bold text-amber-400 py-1.5 border-b border-amber-800/50">Beranda</a>
+      <a href="katalog.html" class="block text-sm font-medium text-amber-100 hover:text-amber-400 py-1.5 border-b border-amber-800/50">Katalog</a>
+      <a href="proyek.html" class="block text-sm font-medium text-amber-100 hover:text-amber-400 py-1.5 border-b border-amber-800/50">Galeri Proyek</a>
+      <a href="ulasan.html" class="block text-sm font-medium text-amber-100 hover:text-amber-400 py-1.5 border-b border-amber-800/50">Ulasan Pelanggan</a>
+      <a href="tentang-kami.html" class="block text-sm font-medium text-amber-100 hover:text-amber-400 py-1.5 border-b border-amber-800/50">Tentang Kami</a>
+      <a href="admin.html" class="block text-xs font-semibold text-amber-300 bg-amber-950 p-2.5 rounded-lg text-center mt-2">
+        <i class="fa-solid fa-lock mr-1"></i> Admin CMS
+      </a>
+    </div>
+  </header>
 
-    <!-- Mobile & Tablet Menu Dropdown -->
-    <div id="mobileMenu" class="hidden lg:hidden border-t border-amber-100 bg-white px-4 pt-3 pb-6 shadow-xl transition-all duration-300">
-      <div class="flex flex-col space-y-3 font-medium text-gray-700">
-        <a href="index.html" class="bg-amber-50 text-amber-900 px-4 py-2.5 rounded-lg font-semibold flex items-center justify-between">
-          <span>Beranda</span>
-          <i class="fa-solid fa-chevron-right text-xs"></i>
-        </a>
-        <a href="katalog.html" class="hover:bg-amber-50 hover:text-amber-900 px-4 py-2.5 rounded-lg transition flex items-center justify-between">
-          <span>Katalog Produk</span>
-          <i class="fa-solid fa-chevron-right text-xs text-gray-400"></i>
-        </a>
-        <a href="proyek.html" class="hover:bg-amber-50 hover:text-amber-900 px-4 py-2.5 rounded-lg transition flex items-center justify-between">
-          <span>Hasil Proyek & Ulasan</span>
-          <i class="fa-solid fa-chevron-right text-xs text-gray-400"></i>
-        </a>
-        <a href="tentang-kami.html" class="hover:bg-amber-50 hover:text-amber-900 px-4 py-2.5 rounded-lg transition flex items-center justify-between">
-          <span>Tentang Kami & Lokasi</span>
-          <i class="fa-solid fa-chevron-right text-xs text-gray-400"></i>
-        </a>
-        <a href="admin.html" class="hover:bg-gray-100 text-gray-600 px-4 py-2.5 rounded-lg transition text-sm flex items-center justify-between">
-          <span>Dashboard Admin CMS</span>
-          <i class="fa-solid fa-lock text-xs text-gray-400"></i>
-        </a>
-        <div class="pt-2">
-          <a href="https://wa.me/6281234567890?text=Halo%20Admin,%20saya%20ingin%20konsultasi%20pembuatan%20gazebo" target="_blank" class="w-full bg-emerald-600 hover:bg-emerald-700 text-white px-5 py-3 rounded-xl font-medium shadow-md transition flex items-center justify-center gap-2">
-            <i class="fa-brands fa-whatsapp text-xl"></i>
-            <span>Hubungi WhatsApp Admin</span>
+  <!-- HERO SECTION -->
+  <main class="flex-1">
+    <section class="bg-gradient-to-b from-amber-950 to-amber-900 text-white py-16 px-4 text-center">
+      <div class="max-w-4xl mx-auto space-y-4">
+        <h1 class="text-3xl sm:text-5xl font-extrabold text-amber-400 leading-tight">Keindahan & Kenyamanan Gazebo Kayu Berkualitas</h1>
+        <p class="text-sm sm:text-lg text-amber-100 max-w-2xl mx-auto">Spesialis pembuat gazebo kayu jati, kelapa, dan bambu berpengalaman. Melayani pemesanan kustom seluruh Indonesia.</p>
+        <div class="pt-4 flex flex-wrap justify-center gap-4">
+          <a href="katalog.html" class="bg-amber-500 hover:bg-amber-600 text-amber-950 font-bold px-6 py-3 rounded-xl text-sm transition">
+            Lihat Katalog Produk
+          </a>
+          <a href="https://wa.me/6281959641829" target="_blank" class="bg-emerald-600 hover:bg-emerald-700 text-white font-bold px-6 py-3 rounded-xl text-sm transition flex items-center gap-2">
+            <i class="fa-brands fa-whatsapp text-lg"></i> Konsultasi Gratis
           </a>
         </div>
       </div>
-    </div>
-  </nav>
+    </section>
 
-  <!-- Hero Section Responsive -->
-  <section class="relative bg-gradient-to-r from-amber-950 via-amber-900 to-amber-950 text-white py-16 sm:py-24 px-4 overflow-hidden">
-    <div class="absolute inset-0 opacity-20 bg-[url('https://images.unsplash.com/photo-1540555700478-4be289fbecef?auto=format&fit=crop&w=1600&q=80')] bg-cover bg-center"></div>
-    <div class="max-w-5xl mx-auto text-center relative z-10">
-      <span class="bg-amber-800/80 text-amber-200 border border-amber-600/40 text-[11px] sm:text-xs uppercase tracking-widest font-semibold px-3 py-1 rounded-full inline-block mb-4">
-        Pengrajin Asli Terpercaya
-      </span>
-      <h1 class="text-3xl sm:text-5xl md:text-6xl font-extrabold tracking-tight mb-4 sm:mb-6 leading-tight">
-        Hadirkan Suasana Alami di Halaman Rumah Anda
-      </h1>
-      <p class="text-sm sm:text-lg md:text-xl text-amber-100 max-w-3xl mx-auto mb-6 sm:mb-8 leading-relaxed">
-        Koleksi gazebo kayu kelapa, kayu jati Jepara, dan bambu petung tahan cuaca dengan pengerjaan rapi & garansi kualitas.
-      </p>
-      <div class="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center">
-        <a href="katalog.html" class="bg-amber-600 hover:bg-amber-700 text-white px-6 py-3.5 rounded-xl font-semibold shadow-lg transition text-sm sm:text-base">
-          Lihat Katalog Produk
-        </a>
-        <a href="#kalkulator" class="bg-white/10 hover:bg-white/20 backdrop-blur-md text-amber-100 border border-amber-300/30 px-6 py-3.5 rounded-xl font-semibold transition text-sm sm:text-base">
-          Hitung Estimasi Biaya
-        </a>
+    <!-- UNGGULAN PRODUK RINGKAS -->
+    <section class="max-w-7xl mx-auto px-4 py-12">
+      <h2 class="text-2xl font-bold text-amber-950 text-center mb-8">Mengapa Memilih Hasbi Berugak?</h2>
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+        <div class="bg-white p-6 rounded-2xl shadow-sm border border-amber-100 text-center">
+          <i class="fa-solid fa-tree text-3xl text-amber-800 mb-3"></i>
+          <h3 class="font-bold text-amber-950">Kayu Pilihan Berkualitas</h3>
+          <p class="text-xs text-gray-600 mt-2">Menggunakan Kayu Jati & Kelapa Tua berkualitas tinggi yang tahan cuaca dan rayap.</p>
+        </div>
+        <div class="bg-white p-6 rounded-2xl shadow-sm border border-amber-100 text-center">
+          <i class="fa-solid fa-hammer text-3xl text-amber-800 mb-3"></i>
+          <h3 class="font-bold text-amber-950">Tukang Berpengalaman</h3>
+          <p class="text-xs text-gray-600 mt-2">Dikerjakan langsung oleh pengrajin profesional Jepara dengan tingkat kerapian presisi.</p>
+        </div>
+        <div class="bg-white p-6 rounded-2xl shadow-sm border border-amber-100 text-center">
+          <i class="fa-solid fa-truck-fast text-3xl text-amber-800 mb-3"></i>
+          <h3 class="font-bold text-amber-950">Kirim & Pasang Se-Indonesia</h3>
+          <p class="text-xs text-gray-600 mt-2">Layanan pengiriman aman dan perakitan di lokasi pelanggan sampai selesai.</p>
+        </div>
       </div>
-    </div>
-  </section>
+    </section>
+  </main>
 
-  <!-- Section Kalkulator Estimasi Responsive -->
-  <section id="kalkulator" class="py-12 sm:py-16 max-w-4xl mx-auto px-4">
-    <div class="bg-white rounded-2xl shadow-xl p-5 sm:p-8 border border-amber-100">
-      <div class="text-center mb-6 sm:mb-8">
-        <h2 class="text-xl sm:text-3xl font-bold text-amber-950">Kalkulator Estimasi Biaya Gazebo</h2>
-        <p class="text-gray-600 text-xs sm:text-sm mt-1 sm:mt-2">Hitung perkiraan harga pembuatan gazebo sesuai spesifikasi Anda.</p>
-      </div>
-
-      <form id="calcForm" class="grid sm:grid-cols-2 gap-4 sm:gap-6">
-        <div>
-          <label class="block text-xs sm:text-sm font-semibold text-gray-700 mb-2">Bahan Utama Kayu/Bambu</label>
-          <select id="calcBahan" class="w-full border border-gray-300 rounded-lg p-2.5 sm:p-3 text-sm focus:ring-2 focus:ring-amber-600 focus:outline-none">
-            <option value="3000000">Kayu Kelapa Sulawesi (Rp 3.000.000 / m²)</option>
-            <option value="4500000">Kayu Jati Jepara (Rp 4.500.000 / m²)</option>
-            <option value="2000000">Bambu Petung Super (Rp 2.000.000 / m²)</option>
-          </select>
-        </div>
-
-        <div>
-          <label class="block text-xs sm:text-sm font-semibold text-gray-700 mb-2">Ukuran Dimensi (PxL)</label>
-          <select id="calcUkuran" class="w-full border border-gray-300 rounded-lg p-2.5 sm:p-3 text-sm focus:ring-2 focus:ring-amber-600 focus:outline-none">
-            <option value="4">2m x 2m (4 m²)</option>
-            <option value="6">2m x 3m (6 m²)</option>
-            <option value="9">3m x 3m (9 m²)</option>
-            <option value="12">3m x 4m (12 m²)</option>
-          </select>
-        </div>
-
-        <div class="sm:col-span-2">
-          <label class="block text-xs sm:text-sm font-semibold text-gray-700 mb-2">Jenis Atap</label>
-          <div class="grid grid-cols-1 sm:grid-cols-3 gap-2 sm:gap-3">
-            <label class="border p-2.5 sm:p-3 rounded-lg flex items-center gap-2 cursor-pointer hover:bg-amber-50">
-              <input type="radio" name="atap" value="0" checked class="accent-amber-800">
-              <span class="text-xs sm:text-sm font-medium">Sirap Kayu</span>
-            </label>
-            <label class="border p-2.5 sm:p-3 rounded-lg flex items-center gap-2 cursor-pointer hover:bg-amber-50">
-              <input type="radio" name="atap" value="500000" class="accent-amber-800">
-              <span class="text-xs sm:text-sm font-medium">Genteng Tanah</span>
-            </label>
-            <label class="border p-2.5 sm:p-3 rounded-lg flex items-center gap-2 cursor-pointer hover:bg-amber-50">
-              <input type="radio" name="atap" value="750000" class="accent-amber-800">
-              <span class="text-xs sm:text-sm font-medium">Ilalang / Ijuk</span>
-            </label>
-          </div>
-        </div>
-      </form>
-
-      <div class="mt-6 sm:mt-8 pt-6 border-t border-gray-100 flex flex-col sm:flex-row items-center justify-between gap-4">
-        <div class="text-center sm:text-left">
-          <span class="text-[11px] text-gray-500 uppercase font-semibold">Estimasi Total Biaya</span>
-          <div id="calcResult" class="text-2xl sm:text-3xl font-extrabold text-amber-900">Rp 12.000.000</div>
-        </div>
-        <button id="calcWaBtn" class="bg-emerald-600 hover:bg-emerald-700 text-white px-6 py-3 rounded-xl font-medium flex items-center gap-2 transition w-full sm:w-auto justify-center text-sm sm:text-base">
-          <i class="fa-brands fa-whatsapp text-lg"></i>
-          <span>Pesan via WhatsApp</span>
-        </button>
-      </div>
-    </div>
-  </section>
-
-  <!-- Footer -->
-  <footer class="bg-amber-950 text-amber-200/80 py-8 sm:py-12 border-t border-amber-900 text-center text-xs sm:text-sm">
-    <p>&copy; 2026 Hasbi Berugak. Seluruh Hak Cipta Dilindungi.</p>
+  <!-- FOOTER -->
+  <footer class="bg-amber-950 text-amber-200 text-center py-6 text-xs border-t border-amber-900">
+    <p>&copy; 2026 Hasbi Berugak - Spesialis Gazebo Kayu Jati & Kelapa.</p>
   </footer>
 
-  <!-- Script Menu Toggle Mobile & Tablet -->
   <script>
-    document.addEventListener('DOMContentLoaded', () => {
-      const mobileMenuBtn = document.getElementById('mobileMenuBtn');
-      const mobileMenu = document.getElementById('mobileMenu');
-      const menuIcon = document.getElementById('menuIcon');
+    const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+    const mobileMenu = document.getElementById('mobileMenu');
+    const menuIcon = document.getElementById('menuIcon');
 
-      if (mobileMenuBtn && mobileMenu) {
-        mobileMenuBtn.addEventListener('click', () => {
-          mobileMenu.classList.toggle('hidden');
-          
-          // Ubah Ikon antara Hamburger (bars) dan X (close)
-          if (mobileMenu.classList.contains('hidden')) {
-            menuIcon.classList.remove('fa-xmark');
-            menuIcon.classList.add('fa-bars');
-          } else {
-            menuIcon.classList.remove('fa-bars');
-            menuIcon.classList.add('fa-xmark');
-          }
-        });
-      }
-    });
+    if (mobileMenuBtn) {
+      mobileMenuBtn.addEventListener('click', () => {
+        mobileMenu.classList.toggle('hidden');
+        if (mobileMenu.classList.contains('hidden')) {
+          menuIcon.classList.remove('fa-xmark');
+          menuIcon.classList.add('fa-bars');
+        } else {
+          menuIcon.classList.remove('fa-bars');
+          menuIcon.classList.add('fa-xmark');
+        }
+      });
+    }
   </script>
-
-  <script src="js/firebase-config.js"></script>
-  <script src="js/app.js"></script>
 </body>
 </html>
